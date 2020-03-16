@@ -1,0 +1,681 @@
+
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+	<!-- Titlebar
+	================================================== -->
+	<div class="single-page-header freelancer-header" data-background-image="images/single-freelancer.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12" *ngIf="!accountEdit">
+					<div class="single-page-header-inner" *ngIf=!editImages>
+						<div class="left-side">
+							<button (click)="editImage()" class="btn editImage right btn-primary apply-now-button popup-with-zoom-anim"><i class="fa fa-edit" aria-hidden="true"></i></button>
+							<div class="header-image freelancer-avatar"><img src="https://res.cloudinary.com/dnf8ntdmr/image/upload/v{{userProfile.profile.profileimage.imageVersion}}/{{userProfile.profile.profileimage.imageId}}.jpg" alt="">
+							</div>
+							<div class="header-details">
+								<h3>{{userProfile.profile.firstName}} {{userProfile.profile.lastName}} <span>{{userProfile.profile.title}}</span></h3>
+								<ul>
+									<li><img class="flag" src="images/flags/de.svg" alt="">{{userProfile.profile.nationality}}</li>
+									<li><div class="verified-badge-with-title">{{userProfile.profile.email}}</div></li>
+									<li><div class="verified-badge-with-title">{{userProfile.profile.phoneCode}}{{userProfile.profile.phoneNumber}}</div></li>
+								</ul>
+							</div>
+							<button (click)="editAccountData()" class="btn btn-primary apply-now-button popup-with-zoom-anim"><i class="fa fa-edit" aria-hidden="true"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-12" *ngIf="editImages" >
+					<div class="dashboard-box margin-top-0 ">
+						<!-- Headline -->
+						<div class="headline">
+							<h3><i class="icon-material-outline-account-circle"></i>Profile image</h3>
+						</div>
+						<form [formGroup]="imageForm">
+							<div class="content with-padding padding-bottom-0">
+								<div class="row">
+									<div class="col-md-3">
+										<div *ngIf="fileUploadProgress">
+											<div class="progress0">
+												<div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': fileUploadProgress , 'height': '10px' }" ></div>
+											</div>
+										  </div>
+										 <div class="" data-tippy-placement="bottom" title="Change Avatar">
+											<img [src]="selectedFile" file accept='image/*' *ngIf="selectedFile" />
+											<input class="file-upload" formControlName='profileImage' ng2FileSelect [uploader]="uploader" (onFileSelected)="OnFileSelect($event)"  (change)="fileProgress($event)"  type="file" accept="image/*" 
+											 required/>
+										</div>	
+									</div>
+								</div>
+							 </div>
+							<div class="input-with-icon-left" >
+								<input type="submit"  (click)="image(imageForm)" class="button  ripple-effect margin-top-10" value="Save">
+								<input type="submit"  (click)="cancelImageForm()" class="button cancel ripple-effect margin-top-10" value="Cancel">
+							  </div>
+						  </form>
+					</div>
+				</div>
+				<div class="col-md-12" *ngIf="accountEdit">
+					<form [formGroup]="cvForm">
+						<div class="content with-padding padding-bottom-0">
+							<div class="row">
+								<div class="col-xl-12">
+										<div class="col-md-6" >
+											<div class="submit-field form-group" 
+											 [ngClass]="{'has-error': cvForm.get('firstName').errors &&
+														 (cvForm.get('firstName').touched || cvForm.get('firstName').dirty)}">
+												<h5 class="control-label">Firstname</h5>
+												<input  type="text" class="form-control" formControlName='firstName' value="{{userProfile.profile.firstName}}" >
+												<span class="help-block" *ngIf="cvForm.get('firstName').errors &&
+												(cvForm.get('firstName').touched || cvForm.get('firstName').dirty)">
+												<span  *ngIf="cvForm.get('firstName').errors.required">firstName is  Required</span>
+												<span  *ngIf="cvForm.get('firstName').errors.minlength || cvForm.get('firstName').errors.maxlength">Min length is 8 & max length is 10</span>
+												</span>
+											</div>
+										</div>
+	
+										<div class="col-md-6">
+											<div class="submit-field"
+											[ngClass]="{'has-error': cvForm.get('lastName').errors &&
+														 (cvForm.get('lastName').touched || cvForm.get('lastName').dirty)}">
+												<h5 class="control-label">Last name</h5>
+												<input type="text" class="form-control" formControlName='lastName' value="{{userProfile.profile.lastName}}">
+												<span class="help-block" *ngIf="cvForm.get('lastName').errors &&
+												(cvForm.get('lastName').touched || cvForm.get('lastName').dirty)">
+												<span  *ngIf="cvForm.get('lastName').errors.required">Lastname is Required</span>
+												<span  *ngIf="cvForm.get('lastName').errors.minlength || cvForm.get('lastName').errors.maxlength">min length is 6 & max length is 10</span>
+												</span>
+											</div>
+										</div>
+	
+										<div class="col-md-6">
+											<div class="submit-field" [ngClass]="{'has-error': cvForm.get('email').errors &&
+											(cvForm.get('email').touched || cvForm.get('email').dirty)}">
+												<h5 class="control-label">Email</h5>
+												<input type="text" formControlName='email'  class="form-control" value="{{userProfile.profile.email}}">
+												<span class="help-block" *ngIf="cvForm.get('email').errors &&
+												(cvForm.get('email').touched || cvForm.get('email').dirty)">
+												<span  *ngIf="cvForm.get('email').errors.required">Email is Required</span>
+												<span  *ngIf="cvForm.get('email').errors.email">Email is not correct</span>
+												</span>
+											</div>
+										</div>
+	
+										<div class="col-md-6">
+											<div class="submit-field">
+												<h5>Nationality</h5>
+												<select  class="with-border  custom-select" data-size="7" formControlName="nationality"    data-live-search="true">
+													<option  selected value="null">Choose your nationality</option>
+													<option *ngFor='let country of countries'  value="{{country.enNationality}}">{{ country.enNationality}}</option>
+												</select>
+											</div>
+										</div>
+	
+										<div class="col-md-6">
+											<div class="submit-field" [ngClass]="{'has-error': cvForm.get('title').errors &&
+											(cvForm.get('title').touched || cvForm.get('title').dirty)}" >
+												<h5>Tagline</h5>
+												<input type="text" class="with-border"  formControlName='title'  value="{{userProfile.profile.title}}">
+												<span class="help-block" *ngIf="cvForm.get('title').errors &&
+												(cvForm.get('title').touched || cvForm.get('title').dirty)">
+												<span  *ngIf="cvForm.get('title').errors.required">Tagline is required</span>
+												<span  *ngIf="cvForm.get('title').errors.minlength || cvForm.get('title').errors.maxlength">min length is 3 & max length is 10</span>
+												</span>
+											</div>
+									   </div>
+	
+									   <div class="col-md-6"  >
+										<div class="submit-field"
+										[ngClass]="{'has-error': cvForm.get('phoneNumber').errors &&
+													 (cvForm.get('phoneNumber').touched || cvForm.get('phoneNumber').dirty)}">
+									<!-- Phone Number -->
+									<h5 class="control-label">PhoneNumber</h5>
+									 <div class="input-group phoneBox " >
+												<span class="dropDown">
+													<ng-select 
+													maxLength="30"
+													[items]="countries"
+													[bindLabel]="'phoneCode'"
+													bindValue="phoneCode"
+													formControlName="phoneCode">
+													<ng-template  ng-label-tmp let-item="item">
+															  {{item.phoneCode}} <img height="30" width="30" [src]="item.flag"/>
+														  </ng-template>
+														  <ng-template  ng-option-tmp let-item="item" let-index="index">
+															<img height="15" width="15" [src]="item.flag"/>
+															<b>{{item.phoneCode}}</b>
+														</ng-template>
+													<ng-template ng-option-tmp let-item="item" let-index="index">
+														<b>{{item.phoneCode}}</b>
+														<img height="20" width="20" [src]="item.flag"/>
+													</ng-template>	
+													</ng-select>
+												</span>
+											  <input class="tel" type="tel" minlength="11"  maxlength="11" formControlName="phoneNumber" value="{{userProfile.profile.phoneNumber}}" >
+											</div>
+									 </div>
+									</div>
+	
+								 </div> 
+							</div>
+	
+						</div>
+						<div class="input-with-icon-left" >
+							<input type="submit"  (click)="submitCvForm()" class="button  ripple-effect margin-top-10" value="Save">
+							<input type="submit"  (click)="cancelCvForm()" class="button cancel ripple-effect margin-top-10" value="Cancel">
+						</div>
+					  </form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- Page Content
+	================================================== -->
+	<div class="container">
+		<div class="row">
+			
+			<!-- Content -->
+			<div class="col-xl-8 col-lg-8 content-right-offset">
+				
+				<!-- Page Content -->
+				
+				<div class="single-page-section" *ngIf="!editAbout">
+					<button (click)="editAboutData()" class="btn right btn-primary apply-now-button popup-with-zoom-anim"><i class="fa fa-edit" aria-hidden="true"></i></button>
+					<h3 class="margin-bottom-25">About Me</h3>
+					<p>{{userProfile.profile.about}}</p>
+				</div>
+				<div *ngIf="editAbout">
+					<div [formGroup]='profileForm'>
+				<div class="col-md-12">
+					<div class="submit-field" [ngClass]="{'has-error': profileForm.get('about').errors &&
+					(profileForm.get('about').touched || profileForm.get('about').dirty)}">
+						<h5 class="control-label">About</h5>
+						<textarea cols="40" rows="10" formControlName='about' minlength="20" maxlength="1000" class="form-control" value="{{userProfile.profile.about}}" ></textarea>
+						<span class="help-block" *ngIf="profileForm.get('about').errors &&
+							(profileForm.get('about').touched || profileForm.get('about').dirty)">
+							<span  *ngIf="profileForm.get('about').errors.required">About is required</span>
+							<span  *ngIf="profileForm.get('about').errors.minlength || profileForm.get('about').errors.maxlength">min length is 10 and max length is 100</span>
+						</span> 
+					 </div> 
+				</div>
+			  </div>
+			  <div class="input-with-icon-left" >
+				<input type="submit"  (click)="submitAboutForm()" class="button  ripple-effect margin-top-10" value="Save">
+				<input type="submit"  (click)="cancelEditForm()" class="button cancel ripple-effect margin-top-10" value="Cancel">
+			  </div>
+			</div>
+	
+				<!-- Boxed List -->
+				<div class="boxed-list margin-bottom-60">
+					<div class="boxed-list-headline">
+						<button (click)="addNewJob()" class="btn right btn-primary apply-now-button popup-with-zoom-anim"><i class="fa fa-plus" aria-hidden="true"></i> </button>
+						<h3><i class="icon-material-outline-business"></i> Employment History</h3>
+					</div>
+					<div *ngIf='!editJobs && !addJob'>
+					<ul class="boxed-list-ul" *ngFor="let jobHistory of jobHistories"> 
+						<li>
+							<button (click)="deleteJob(jobHistory)" class="btn right btn-danger apply-now-button popup-with-zoom-anim"><i class="fa fa-trash" aria-hidden="true"></i></button>
+							<button (click)="editJobsData(jobHistory)" class="btn right btn-warning apply-now-button popup-with-zoom-anim"><i class="fa fa-edit" aria-hidden="true"></i></button>
+							
+							<div class="boxed-list-item">
+								<!-- Avatar -->
+								<div class="item-image">
+									<img src="/assets/img/about/company-logo.png" alt="">
+								</div>
+								
+								<!-- Content -->
+								<div class="item-content">
+									<h4>{{jobHistory.jobName}}</h4>
+									<div class="item-details margin-top-7">
+										<div class="detail-item"><a href="#"><i class="icon-material-outline-business"></i> {{jobHistory.companyName}}</a></div>
+										<div class="detail-item"><i class="icon-material-outline-date-range"></i> {{jobHistory.startYear | date}} - {{jobHistory.endYear | date}}</div>
+									</div>
+									<div class="item-description">
+										<p id="text" class="myStyle" > {{jobHistory.jobSummary}} </p>
+										<button  id="fullButton" class="show button margin-top-35  button-sliding-icon ripple-effect" (click)="fullJobSummary()">countinue reading</button>
+										<button  id="lessButton" class="hide button margin-top-35  button-sliding-icon ripple-effect" (click)="lessJobSummary()">less</button>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+					</div>
+					<div *ngIf="editJobs">
+						<form [formGroup]="jobForm">
+							<div class="content top">
+								<div class="row">
+									<div class="col-md-12" [formGroup]="jobForm">
+											<div class="submit-field" formArrayName ="jobHistories">
+												<div class="keywords-container"  *ngFor="let item of jobForm.get('jobHistories').controls; let i = index;" >
+												<div class="keyword-input-container" [formGroupName] ='i' >
+														<div class="form-group  col-md-6">
+																<label for="JobTitle">Job name</label>
+																<input type="text" formControlName ="jobName" class="form-control" id="JobTitle" value={{singleJobHistory.jobName}}>
+															</div>
+															<div class="form-group col-md-6">
+																<label for="CompanyTitle">Company name</label>
+																<input type="text" formControlName ="companyName" class="form-control" id="CompanyTitle" value={{singleJobHistory.companyName}}>
+															 </div>
+															<div class="form-group col-md-6">
+																<label for="EndDate">End date</label>
+																<input type="text" formControlName ="endYear"  class="form-control" name="endYear"   bsDatepicker id="EndDate" value={{singleJobHistory.endYear}}>
+															 </div>
+															 <div class="form-group col-md-6">
+																<label for="StartDate">Start date</label>
+																<input type="text" formControlName ="startYear" name="startYear"   bsDatepicker  class="form-control" id="StartDate" value={{singleJobHistory.startYear}}>
+															</div>
+															<div class="form-group col-md-12">
+															  <label for="JobSummary">Job summary</label>
+															  <textarea cols="30" rows="5" type="expYear" formControlName ="jobSummary"  class="form-control" value={{singleJobHistory.jobSummary}}></textarea>
+															</div>
+													 </div>
+												</div>
+												<div class="clearfix"></div>
+											</div>
+										</div>
+									</div>			
+							 </div>
+							 <div class="input-with-icon-left" >
+								<input type="submit"  (click)="submitJobForm(jobForm)" class="button  ripple-effect margin-top-10" value="Save">
+								<input type="submit"  (click)="cancelJobForm()" class="button cancel ripple-effect margin-top-10" value="Cancel">
+							</div>
+						</form>
+					</div>
+					<div *ngIf="addJob">
+						<form [formGroup]="jobForm">
+							<div class="content top">
+								<div class="row">
+									<div class="col-md-12" [formGroup]="jobForm">
+	
+											<div class="submit-field" formArrayName ="jobHistories">
+												<div class="keywords-container"  *ngFor="let item of jobForm.get('jobHistories').controls; let i = index;" >
+												<div class="keyword-input-container" [formGroupName] ='i' >
+														<div class="form-group  col-md-6">
+																<label for="JobTitle">Job name</label>
+																<input type="text" formControlName ="jobName" class="form-control" id="JobTitle" value={{singleJobHistory.jobName}}>
+															</div>
+															<div class="form-group col-md-6">
+																<label for="CompanyTitle">Company name</label>
+																<input type="text" formControlName ="companyName" class="form-control" id="CompanyTitle" value={{singleJobHistory.companyName}}>
+															 </div>
+															<div class="form-group col-md-6">
+																<label for="EndDate">End date</label>
+																<input type="text" formControlName ="endYear"  class="form-control" name="endYear"   bsDatepicker id="EndDate" value={{singleJobHistory.endYear}}>
+															 </div>
+															 <div class="form-group col-md-6">
+																	<label for="StartDate">Start date</label>
+																	<input type="text" formControlName ="startYear"   name="startYear"   bsDatepicker  class="form-control" id="StartDate" value={{singleJobHistory.startYear}}>
+															</div>
+															<div class="form-group col-md-12">
+															  <label for="JobSummary">Job summary</label>
+															  <textarea cols="30" rows="5" type="expYear" formControlName ="jobSummary"  class="form-control" value={{singleJobHistory.jobSummary}}></textarea>
+															</div>
+													 </div>
+												</div>
+												<div class="clearfix"></div>
+											</div>
+										</div>
+									</div>			
+							 </div>
+							 <div class="input-with-icon-left" >
+								<input type="submit"  (click)="submitAddJobForm(jobForm)" class="button  ripple-effect margin-top-10" value="Save">
+								<input type="submit"  (click)="cancelAddJobForm()" class="button cancel ripple-effect margin-top-10" value="Cancel">
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- Boxed List / End -->
+	
+			</div>
+		
+			
+	
+			<!-- Sidebar -->
+			<div class="col-xl-4 col-lg-4">
+				<div class="sidebar-container">
+					<!-- Button -->
+					<a class="apply-now-button popup-with-zoom-anim margin-bottom-50" data-toggle="modal" data-target="#myModal" >Send Message <i class="icon-material-outline-arrow-right-alt"></i></a>
+					<!-- Modal -->
+					<div id="myModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<!-- Modal content-->
+						<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Send Message to {{userProfile.profile.firstName}}</h4>
+						</div>
+						<div class="modal-body">
+						<!-- Form -->
+	
+						<form method="post"[formGroup]="messageForm" >
+							{{messageForm.value | json}}
+							<div class="input-with-icon-left"
+									[ngClass]="{'has-error': messageForm.get('name').errors &&
+												(messageForm.get('name').touched || messageForm.get('name').dirty)}">
+									<i class="icon-material-outline-account-circle"></i>
+									<input  type="text" formControlName='name' class="input-text with-border form-control" name="name" id="emailaddress" placeholder="Full Name" >
+									<span class="help-block" *ngIf="messageForm.get('name').errors &&
+									(messageForm.get('name').touched || messageForm.get('name').dirty)">
+									<span  *ngIf="messageForm.get('name').errors.required">name is  Required</span>
+									<span  *ngIf="messageForm.get('name').errors.minlength || message.get('name').errors.maxlength">Min length is 8 & max length is 10</span>
+									</span>
+							</div>
+	
+							<div class="input-with-icon-left"
+							[ngClass]="{'has-error': messageForm.get('email').errors &&
+										(messageForm.get('email').touched || messageForm.get('email').dirty)}">
+							<i class="icon-material-outline-account-circle"></i>
+							<input  type="text" formControlName='email' class="input-text with-border form-control" name="email" id="emailaddress" placeholder="Email Address" >
+							<span class="help-block" *ngIf="messageForm.get('email').errors &&
+							(messageForm.get('email').touched || messageForm.get('email').dirty)">
+							<span  *ngIf="messageForm.get('email').errors.required">Email is Required</span>
+							<span  *ngIf="messageForm.get('email').errors.email">Email is not correct</span>
+							</span>
+					</div>
+							<div class="submit-field" [ngClass]="{'has-error': messageForm.get('message').errors &&
+							(messageForm.get('message').touched || messageForm.get('message').dirty)}">
+								<textarea cols="30" rows="5" formControlName='message' minlength="10" maxlength="255" class="with-border" ></textarea>
+								<span class="help-block" *ngIf="messageForm.get('message').errors &&
+									(messageForm.get('message').touched || messageForm.get('message').dirty)">
+									<span  *ngIf="messageForm.get('message').errors.required">message is required</span>
+									<span  *ngIf="messageForm.get('message').errors.minlength || messageForm.get('message').errors.maxlength">min length is 10 and max length is 100</span>
+								</span>
+							</div>
+	
+							<div class="uploadButton margin-top-25">
+								<div *ngIf="pdfUploadProgress">
+									<div class="progress0">
+										<div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': pdfUploadProgress , 'height': '10px' }" ></div>
+									</div>
+									</div>
+									<div class="attachments-container margin-top-0 margin-bottom-0">
+									<div class="attachment-box ripple-effect">
+										<input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" multiple formControlName='attachments' ng2FileSelect [uploader]="uploader" (onFileSelected)="OnPdfSelect($event)"   type="file"  
+										required/>
+									</div>
+								</div>
+								<label class="uploadButton-button ripple-effect" for="upload">Add Attachments</label>
+								<span class="uploadButton-file-name">Allowed file types: zip, pdf, png, jpg <br> Max. files size: 50 MB.</span>
+							</div>
+	
+							<div class="input-with-icon-left" >
+								<input type="submit"  (click)="messages(messageForm)" class="button  ripple-effect margin-top-10" value="Save">
+							  </div>
+						</form>
+							</div>
+					  </div>
+				  </div>
+				</div>
+					<!-- Freelancer Indicators -->
+					<div class="sidebar-widget">
+					</div>
+					<!-- Widget -->
+					<div class="sidebar-widget" *ngIf="!editSkills">
+						<div class="boxed-list-headline">
+						<button (click)="addNewSkill()" class="btn right btn-primary apply-now-button popup-with-zoom-anim"><i class="fa fa-plus" aria-hidden="true"></i></button>
+						<h3>Skills</h3>
+						</div>
+						<ul class="task-tags" *ngFor="let skill of skills">
+							<button (click)="deleteSkill(skill)" class="btn right btn-danger apply-now-button popup-with-zoom-anim"><i class="fa fa-trash" aria-hidden="true"></i></button>
+							<button (click)="editSkillsData(skill)" class="btn right btn-warning apply-now-button popup-with-zoom-anim"><i class="fa fa-edit" aria-hidden="true"></i></button>
+							<li><span>{{skill.skillName}}</span></li>
+						</ul>
+					</div>
+					<div class="col-xl-12" *ngIf="editSkills" >
+						<div class="dashboard-box">
+							<form [formGroup]="skillForm">
+							  <div class="content content-skill">
+									<div class="row">
+											 <div class="col-md-12" [formGroup]="skillForm"  >
+													<div class="submit-field" formArrayName ="skills"  >
+														<div class="keywords-container" *ngFor="let item of skillForm.get('skills').controls; let i = index;" >
+														<div class="keyword-input-container"   [formGroupName] ='i'>
+															<input type="text" formControlName="skillName" class="keyword-input with-border" value="{{skill.skillName}}"/>
+														</div>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+												 </div>   
+										 </div>
+								  </div>
+							  <div class="input-with-icon-left" >
+								<input type="submit"  (click)="submitSkillForm(skillForm)" class="button  ripple-effect margin-top-10" value="Save">
+								<input type="submit"  (click)="cancelEditSkillForm()" class="button cancel ripple-effect margin-top-10" value="Cancel">
+							</div>						 
+						</form>
+						</div>
+					</div>
+					<div class="col-xl-12" *ngIf="addSkill">
+						<div class="dashboard-box">
+							<form [formGroup]="skillForm">
+							  <div class="content content-skill">
+									<div class="row">
+											 <div class="col-md-12" [formGroup]="skillForm"  >
+													<div class="submit-field" formArrayName ="skills"  >
+														<div class="keywords-container" *ngFor="let item of skillForm.get('skills').controls; let i = index;" >
+														<div class="keyword-input-container"   [formGroupName] ='i'>
+															<input type="text" formControlName="skillName" class="keyword-input with-border" value="{{skill.skillName}}"/>
+														</div>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+												 </div>   
+										 </div>
+								  </div>
+							  <div class="input-with-icon-left" >
+								<input type="submit"  (click)="submitAddSkillForm(skillForm)" class="button  ripple-effect margin-top-10" value="Save">
+							</div>						 
+						</form>
+						</div>
+					</div>
+	
+					<!-- Widget -->
+					<div class="sidebar-widget" *ngIf="!editCv">
+						  <button (click)="editMyCv()" class="btn right btn-primary apply-now-button popup-with-zoom-anim"><i class="fa fa-edit" aria-hidden="true"></i></button>
+						<h3>Attachments</h3>
+						<div class="attachments-container">
+							<a  class="attachment-box ripple-effect" (click)="downloadPdf()">Download Cv</a>	
+						</div>
+					</div>
+					<div class="col-xl-12" *ngIf="editCv">
+						<div class="dashboard-box">
+							<!-- Headline -->
+							<div class="headline">
+								<h3><i class="icon-material-outline-account-circle"></i>CV</h3>
+							</div>
+							<form [formGroup]="pdfForm">
+								<div class="content with-padding padding-bottom-0">
+									<div class="row">
+										<div class="col-md-12">
+											<div *ngIf="pdfUploadProgress">
+												<div class="progress0">
+													<div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': pdfUploadProgress , 'height': '10px' }" ></div>
+												</div>
+											  </div>
+											  <div class="attachments-container margin-top-0 margin-bottom-0">
+												<div class="attachment-box ripple-effect">
+													<input class="file-upload" formControlName='pdf' ng2FileSelect [uploader]="uploader" (onFileSelected)="OnCvSelect($event)"   type="file" accept="image/*, application/pdf" 
+												 required/>
+												</div>
+											</div>
+												 
+										</div>
+									</div>
+								 </div>
+								<div class="input-with-icon-left" >
+									<input type="submit"  (click)="pdf(pdfForm)" class="button  ripple-effect margin-top-10" value="Save">
+								  </div>
+							  </form>
+						</div>
+					</div>
+	
+	
+					<!-- Sidebar Widget -->
+					<div class="sidebar-widget">
+						<h3>Bookmark or Share</h3>
+	
+						<!-- Bookmark Button -->
+					
+						<button (click) = "bookmark()" class="bookmark-button margin-bottom-25">
+							<span class="bookmark-icon"></span>
+							<span *ngIf = '!bookmarked' class="bookmark-text">Bookmark</span>
+							<span *ngIf = 'bookmarked' class="bookmark-text">Bookmarked</span>
+						</button>
+						
+	
+						<!-- Copy URL -->
+						<div class="copy-url">
+							<input id="copy-url" type="text" value="" class="with-border">
+							<button class="copy-url-button ripple-effect" data-clipboard-target="#copy-url" title="Copy to Clipboard" data-tippy-placement="top"><i class="icon-material-outline-file-copy"></i></button>
+						</div>
+	
+						<!-- Share Buttons -->
+						<div class="share-buttons margin-top-25">
+							<div class="share-buttons-trigger"><i class="icon-feather-share-2"></i></div>
+							<div class="share-buttons-content">
+								<span>Interesting? <strong>Share It!</strong></span>
+								<ul class="share-buttons-icons">
+									<li><a href="#" data-button-color="#3b5998" title="Share on Facebook" data-tippy-placement="top"><i class="icon-brand-facebook-f"></i></a></li>
+									<li><a href="#" data-button-color="#1da1f2" title="Share on Twitter" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>
+									<li><a href="#" data-button-color="#dd4b39" title="Share on Google Plus" data-tippy-placement="top"><i class="icon-brand-google-plus-g"></i></a></li>
+									<li><a href="#" data-button-color="#0077b5" title="Share on LinkedIn" data-tippy-placement="top"><i class="icon-brand-linkedin-in"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+	
+				</div>
+			</div>
+	
+		</div>
+	</div>
+	
+	
+	<!-- Spacer -->
+	<div class="margin-top-15"></div>
+	<!-- Spacer / End-->
+	
+	<!-- Footer
+	================================================== -->
+	
+	<!-- Footer / End -->
+	
+	</div>
+	<!-- Wrapper / End -->
+	
+	
+	<!-- Make an Offer Popup
+	================================================== -->
+	<div id="tab" class="zoom-anim-dialog mfp-hide dialog-with-tabs">
+	
+		<!--Tabs -->
+	
+		<div class="sign-in-form">
+	
+			<ul class="popup-tabs-nav">
+				<li><a href="#tab">Send Message</a></li>
+			</ul>
+	
+			<div class="popup-tabs-container">
+	
+				<!-- Tab -->
+				<div class="popup-tab-content" id="tab">
+					
+					<!-- Welcome Text -->
+					<div class="welcome-text">
+						<h3>Discuss your project with David</h3>
+					</div>
+						
+					<!-- Form -->
+					<form method="post">
+	
+						<div class="input-with-icon-left">
+							<i class="icon-material-outline-account-circle"></i>
+							<input type="text" class="input-text with-border" name="name" id="name" placeholder="First and Last Name"/>
+						</div>
+	
+						<div class="input-with-icon-left">
+							<i class="icon-material-baseline-mail-outline"></i>
+							<input type="text" class="input-text with-border" name="emailaddress" id="emailaddress" placeholder="Email Address"/>
+						</div>
+	
+						<textarea name="textarea" cols="10" placeholder="Message" class="with-border"></textarea>
+	
+						<div class="uploadButton margin-top-25">
+							<input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" multiple/>
+							<label class="uploadButton-button ripple-effect" for="upload">Add Attachments</label>
+							<span class="uploadButton-file-name">Allowed file types: zip, pdf, png, jpg <br> Max. files size: 50 MB.</span>
+						</div>
+	
+					</form>
+					
+					<!-- Button -->
+					<button class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit">Make an Offer <i class="icon-material-outline-arrow-right-alt"></i></button>
+	
+				</div>
+				<!-- Login -->
+				<div class="popup-tab-content" id="loginn">
+					
+					<!-- Welcome Text -->
+					<div class="welcome-text">
+						<h3>Discuss Your Project With Tom</h3>
+					</div>
+						
+					<!-- Form -->
+					<form method="post" id="make-an-offer-form">
+						<div class="input-with-icon-left">
+							<i class="icon-material-outline-account-circle"></i>
+							<input type="text" class="input-text with-border" name="name2" id="name2" placeholder="First and Last Name" required/>
+						</div>
+	
+						<div class="input-with-icon-left">
+							<i class="icon-material-baseline-mail-outline"></i>
+							<input type="text" class="input-text with-border" name="emailaddress2" id="emailaddress2" placeholder="Email Address" required/>
+						</div>
+	
+						<textarea name="textarea" cols="10" placeholder="Message" class="with-border"></textarea>
+	
+						<div class="uploadButton margin-top-25">
+							<input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload-cv" multiple/>
+							<label class="uploadButton-button" for="upload-cv">Add Attachments</label>
+							<span class="uploadButton-file-name">Allowed file types: zip, pdf, png, jpg <br> Max. files size: 50 MB.</span>
+						</div>
+					</form>		
+					<!-- Button -->
+					<button class="button full-width button-sliding-icon ripple-effect" type="submit" form="make-an-offer-form">Make an Offer <i class="icon-material-outline-arrow-right-alt"></i></button>
+				</div>
+				<div class="modal-content">
+					<ng-template #content let-c="close" let-d="dismiss" class="modal-content">
+					
+					  <div class="modal-header">
+						<h4 class="modal-title">Write a Review</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+						  <span aria-hidden="true">&times;</span>
+						</button>
+					  </div>
+					  <div class="modal-body">
+						<form>
+							 <textarea rows="5"
+									class="form-control"
+									placeholder="Write about your experience in this place"
+									id="text"
+									name="text"
+									[(ngModel)]="review.text"
+									>
+							</textarea>  
+						</form>
+					  </div>
+					</ng-template>
+				 </div>
+			</div>
+		</div>
+	</div>
+	<!-- Make an Offer Popup / End -->
+	
+	
+	
+	
+	

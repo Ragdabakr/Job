@@ -1,0 +1,50 @@
+.margin-top-150{
+    margin-top: 150px;
+}
+.account-type {
+    margin: 0 auto;
+    width: 60%;
+    display: flex;
+    width: calc(60% + 0px);
+    margin-bottom: 30px;
+}
+.account-type div {
+    flex: 1;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+form {
+    width: 56%;
+    margin: 0 auto;
+}
+.ripple-effect{
+    width:100%;
+}
+.social-login-buttons{
+    width: 60%;
+    margin: 0 auto;
+}
+.social-login-separator{
+    width:56%;
+    margin: 0 auto;
+}
+.social-login-buttons .google-login {
+    margin-left: 20px;
+}
+input {
+    border: 1px solid #e0e0e0;
+    padding-right: 60px !important;
+    box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.05);
+}
+.form-control:focus {
+    border:1px solid #ccc;
+}
+.alert {
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.forgot-password {
+    margin-left: 40%;
+}

@@ -1,0 +1,61 @@
+
+<!-- Page Content
+================================================== -->
+<div class="container margin-top-150" >
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="login-register-page">
+				<div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade in">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p >{{errorMessage}}</p>
+						</div>
+						<div *ngIf="successMessage" class="alert alert-success alert-dismissible fade in">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<p>{{successMessage}}</p>
+				        </div>
+						  
+				<!-- Welcome Text -->
+				<!-- <div class="welcome-text">
+					<h3>{{'auth.loginIntro' | translate}}</h3>
+					<span>{{'auth.noAccount' | translate}} <a href="/register">{{'auth.signUp' | translate}}</a></span>
+				</div> -->
+					
+				<!-- Form -->
+				<form method="post" id="login-form" #loginForm='ngForm' >
+					<div class="input-with-icon-left">
+						<i class="icon-material-baseline-mail-outline"></i>
+						<input type="text" class="input-text with-border"
+						 [(ngModel)]='formData.email' name='email'placeholder="email" #email='ngModel' #emailInput
+						required/>
+					</div>
+
+					<div class="input-with-icon-left">
+						<i class="icon-material-outline-lock"></i>
+						<input type="password" class="input-text with-border" [(ngModel)]='formData.password' name="password" #password='ngModel' id="password" placeholder="password"
+						required/>
+					</div>
+					<!-- <div class="checkbox p-0">
+						<input type="checkbox" [(ngModel)]="formData.isPresistence" name="isPresistence" id="rememberme">
+						<label for="rememberme">Remember</label>
+					  </div> -->
+				<a (click)='forgotPass()' class="forgot-password"></a>
+				<div class="input-with-icon-left" >
+                  <input type="submit"  (click)="login(formData)" class="button  ripple-effect margin-top-10" value="login">
+				</div>
+			</form>
+				<!-- Social Login -->
+			<div class="social-login-separator margin-top-10"><span>auth</span></div>
+				<!-- <div class="social-login-buttons margin-top-10">
+					<button class="facebook-login ripple-effect" (click)="FacebookAuth()"><i class="icon-brand-facebook-f"></i>{{'auth.facebookLogin' | translate}}</button>
+                    <button class="google-login ripple-effect" (click)="GoogleAuth()"><i class="icon-brand-google-plus-g"></i> {{'auth.googleLogin' | translate}}</button>
+				</div> -->
+			</div> 
+		</div>
+	</div>
+</div>
+
+
+<!-- Spacer -->
+<div class="margin-top-70"></div>
+<!-- Spacer / End-->
+

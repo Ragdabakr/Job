@@ -1,0 +1,400 @@
+
+<!-- Wrapper -->
+<div id="wrapper">
+	<div *ngIf="error" class="alert alert-danger alert-dismissible fade in" >
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<p >{{alert}}</p>
+	</div>
+	<div *ngIf="success" class="alert alert-success alert-dismissible fade in" >
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<p>{{successAlert}}</p>
+	</div>
+<!-- Titlebar
+================================================== -->
+<div class="single-page-header" data-background-image="images/single-job.jpg">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="single-page-header-inner">
+					<div class="left-side">
+							
+						<div class="header-image"  *ngIf="companyProfile.profileimage"><img class="companyImage" src="https://res.cloudinary.com/dnf8ntdmr/image/upload/v{{companyProfile.profileimage.imageVersion}}/{{companyProfile.profileimage.imageId}}.jpg" alt=""></div>
+						<div class="header-image"  *ngIf="!companyProfile.profileimage" ><img class="companyImage" src="/assets/img/company.png" alt=""></div>
+						<div class="header-details">
+							<h3>{{job.title}}<span class="companyProfile" (click)="getCompany()">{{job.companyName}}</span></h3>
+							<ul>
+								<li><div class="star-rating" data-rating="4.9"></div></li>
+								<li><img class="flag" src="images/flags/de.svg" alt=""> {{job.location}} </li>
+								<li><i class="fas fa-clipboard-check"></i>Verified</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="right-side">
+						<div class="salary-box">
+							<div class="salary-type">Category</div>
+							<div class="salary-amount">{{job.category}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Page Content
+================================================== -->
+<div class="container">
+	<div class="row">
+		
+		<!-- Content -->
+		<div class="col-xl-8 col-lg-8 content-right-offset">
+			<div class="single-page-section">
+				<h3 class="margin-bottom-25">Job Description</h3>
+				<p>{{job.job}}</p>
+			</div>
+			<div class="single-page-section" *ngIf='FindSimilarJobsArr.length > 0'>
+				<h3 class="margin-bottom-25">Similar Jobs</h3>
+                  <hr>
+				<!-- Listings Container -->
+				<div class="listings-container grid-layout" >
+					<!-- Job Listing -->
+					<ul *ngFor=" let smilarJob of FindSimilarJobsArr">
+					<li>	
+					<a (click)="getJob(smilarJob)" class="job-listing">
+						<!-- Job Listing Details -->
+						<div class="job-listing-details">
+							<!-- Details -->
+							<div class="job-listing-description">
+							
+								<h4 class="job-listing-company">{{smilarJob.companyName}} <span class="verified-badge" title="Verified Employer" data-tippy-placement="top"></span></h4>
+								<h3 class="job-listing-title">{{smilarJob.title | uppercase}} </h3>
+							</div>
+						</div>
+						<!-- Job Listing Footer -->
+						<div class="job-listing-footer">
+							<ul>
+								<li><i class="far fa-compass"></i> {{smilarJob.location}} </li>
+								<li><i class="fas fa-briefcase"></i> {{smilarJob.type}} </li>
+								<li><i class="far fa-clock"></i> {{TimeFromNow(smilarJob.createdAt)}}</li>
+							</ul>
+						</div>
+					</a>
+					</li>
+					</ul>
+				</div>
+					<!-- Listings Container / End -->
+			</div>
+			<hr>
+			<div class="single-page-section" *ngIf='FindSimilarJobsArr.length === 0'>
+				<h3>No Similar Jobs Found</h3>
+			</div>
+		</div>
+		
+		<!-- Sidebar -->
+		<div class="col-xl-4 col-lg-4">
+			<div class="sidebar-container">
+				<!-- Trigger the modal with a button -->
+				<button *ngIf="user.role === 'employee' && !cantApplay"  class="apply-now-button popup-with-zoom-anim"><h3 class="error">You have already applied for this job</h3></button>
+				<button *ngIf="user.role === 'employee' && cantApplay"   (click)="userApplayForJob()"  class="button ripple-effect">Applay for job user<i class="icon-material-outline-arrow-right-alt"></i></button>
+				<button *ngIf="!user"  data-toggle="modal" data-target="#myModal"   class="button ripple-effect">Applay for job not user<i class="icon-material-outline-arrow-right-alt"></i></button>	
+
+				<!-- Modal -->
+				<div id="myModal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Applay for job</h4>
+					</div>
+					<div class="modal-body">
+						<form [formGroup]="applayJob" novalidate >
+                            <div class="content with-padding padding-bottom-10">
+                                <div class="row">
+                                  {{applayJob.value | json}}
+                                    <div class="col-md-12">
+                                        <div class="submit-field">
+                                                <div class="submit-field form-group" 
+                                                 [ngClass]="{'has-error':  (applayJob?.submitted && applayJob.controls?.name.invalid) || applayJob.get('name').errors &&
+                                                             (applayJob.get('name').touched || applayJob.get('name').dirty)}">
+                                                    <h5 class="control-label" >Name<span class="required">*</span></h5>         
+                                                    <input  type="text" class="form-control   with-border" minlength="2"  maxlength="100" formControlName='name' required>
+                                                    <span class="help-block" *ngIf="applayJob.get('name').errors &&
+                                                    (applayJob.get('name').touched || applayJob.get('name').dirty)">
+                                                    <span class="help-block" *ngIf="(applayJob?.submitted && applayJob.controls?.name.invalid) ||  applayJob.get('name').errors.required">title is  Required</span>
+                                                    <span class="help-block" *ngIf="applayJob.get('name').errors.minlength || applayJob.get('name').errors.maxlength">Min length is 2 & max length is 10</span>
+                                                    </span>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="submit-field" [ngClass]="{'has-error': applayJob.get('email').errors &&
+                                        (applayJob.get('email').touched || applayJob.get('email').dirty)}">
+                                            <h5 class="control-label">Email <span class="required">*</span> </h5>
+                                            <input type="text" formControlName='email'  class="form-control  with-border" value="tom@example.com" required>                                            <span class="help-block" *ngIf="applayJob.get('email').errors &&
+                                            (applayJob.get('email').touched || applayJob.get('email').dirty)">
+                                            <span class="help-block" *ngIf="applayJob.get('email').errors.required">Email is Required</span>
+                                            <span class="help-block" *ngIf="applayJob.get('email').errors.email">Email is not correct</span>
+                                            </span>
+                                        </div>
+									</div>
+									<div class="col-md-12"  >
+										<div class="submit-field"
+										[ngClass]="{'has-error': applayJob.get('phoneNumber').errors &&
+													 (applayJob.get('phoneNumber').touched || applayJob.get('phoneNumber').dirty)}">
+									<!-- Phone Number -->
+									<h5 class="control-label">PhoneNumber</h5>
+									 <div class="input-group phoneBox " >
+												<span class="dropDown">
+													<ng-select 
+													maxLength="30"
+													[items]="countries"
+													[bindLabel]="'phoneCode'"
+													bindValue="phoneCode"
+													formControlName="phoneCode">
+													<ng-template  ng-label-tmp let-item="item">
+															  {{item.phoneCode}}<img height="30" width="30" [src]="item.flag"/>
+														  </ng-template>
+														  <ng-template  ng-option-tmp let-item="item" let-index="index">
+															<img height="15" width="15" [src]="item.flag"/>
+															<b>{{item.phoneCode}}</b>
+														</ng-template>
+													<ng-template ng-option-tmp let-item="item" let-index="index">
+														<b>{{item.phoneCode}}</b>
+														<img height="20" width="20" [src]="item.flag"/>
+													</ng-template>	
+													</ng-select>
+												</span>
+											  <input class="tel" type="tel" minlength="11"  maxlength="11" formControlName="phoneNumber" placeholder="Phone Number" >
+											</div>
+									   </div>
+									</div>
+									<div class="col-md-12">
+											<div *ngIf="pdfUploadProgress">
+												<div class="progress0">
+													<div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': pdfUploadProgress , 'height': '10px' }" ></div>
+												</div>
+												</div>
+												<div class="attachments-container margin-top-0 margin-bottom-0">
+												<div class="attachment-box ripple-effect">
+													<input class="file-upload" formControlName='pdf' ng2FileSelect [uploader]="uploader" (onFileSelected)="OnPdfSelect($event)"   type="file" accept="image/*, application/pdf" 
+													required/>
+												</div>
+											</div> 
+										</div>
+                                </div>
+                            </div>
+                        </form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" (click)="submit(applayJob)" class="btn btn-primary" data-dismiss="modal">Submit</button>
+						<button type="button"  (click)="reset()"  class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+					</div>
+				  </div>
+				</div>
+
+				<!-- Sidebar Widget -->
+				<div class="sidebar-widget">
+					<div class="job-overview">
+						<div class="job-overview-headline">Job Summary</div>
+						<div class="job-overview-inner">
+							<ul>
+								<li>
+									<i class="icon-material-outline-location-on"></i>
+									<span><i class="fa fa-map-marker"></i> Location</span>
+									<h5>{{job.location}}</h5>
+								</li>
+								<li>
+									<i class="icon-material-outline-access-time"></i>
+									<span><i class="fa fa-envelope"></i> Email</span>
+									<h5>{{job.email}}</h5>
+								</li>
+								<li>
+									<i class="icon-material-outline-business-center"></i>
+									<span><i class="fa fa-briefcase"></i> Job Type</span>
+									<h5>{{job.type}}</h5>
+								</li>
+								<li *ngIf="job.max && job.min">
+									<i class="icon-material-outline-local-atm"></i>
+									<span><i class="fa fa-credit-card"></i> Salary</span>
+									<h5>{{job.min}} - {{job.max}}</h5>
+								</li>
+								<li>
+									<i class="icon-material-outline-access-time"></i>
+									<span><i class="fa fa-clock"></i> Date Posted</span>
+									<h5>{{TimeFromNow(job.createdAt)}}</h5>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Footer
+================================================== -->
+<div id="footer">
+	
+	<!-- Footer Top Section -->
+	<div class="footer-top-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+
+					<!-- Footer Rows Container -->
+					<div class="footer-rows-container">
+						
+						<!-- Left Side -->
+						<div class="footer-rows-left">
+							<div class="footer-row">
+								<div class="footer-row-inner footer-logo">
+									<img src="images/logo2.png" alt="">
+								</div>
+							</div>
+						</div>
+						
+						<!-- Right Side -->
+						<div class="footer-rows-right">
+
+							<!-- Social Icons -->
+							<div class="footer-row">
+								<div class="footer-row-inner">
+									<ul class="footer-social-links">
+										<li>
+											<a href="#" title="Facebook" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-facebook-f"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="Twitter" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-twitter"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="Google Plus" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-google-plus-g"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="LinkedIn" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-linkedin-in"></i>
+											</a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							
+							<!-- Language Switcher -->
+							<div class="footer-row">
+								<div class="footer-row-inner">
+									<select class="selectpicker language-switcher" data-selected-text-format="count" data-size="5">
+										<option selected>English</option>
+										<option>Français</option>
+										<option>Español</option>
+										<option>Deutsch</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- Footer Rows Container / End -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Top Section / End -->
+
+	<!-- Footer Middle Section -->
+	<div class="footer-middle-section">
+		<div class="container">
+			<div class="row">
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>For Candidates</h3>
+						<ul>
+							<li><a href="#"><span>Browse Jobs</span></a></li>
+							<li><a href="#"><span>Add Resume</span></a></li>
+							<li><a href="#"><span>Job Alerts</span></a></li>
+							<li><a href="#"><span>My Bookmarks</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>For Employers</h3>
+						<ul>
+							<li><a href="#"><span>Browse Candidates</span></a></li>
+							<li><a href="#"><span>Post a Job</span></a></li>
+							<li><a href="#"><span>Post a Task</span></a></li>
+							<li><a href="#"><span>Plans & Pricing</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>Helpful Links</h3>
+						<ul>
+							<li><a href="#"><span>Contact</span></a></li>
+							<li><a href="#"><span>Privacy Policy</span></a></li>
+							<li><a href="#"><span>Terms of Use</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>Account</h3>
+						<ul>
+							<li><a href="#"><span>Log In</span></a></li>
+							<li><a href="#"><span>My Account</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Newsletter -->
+				<div class="col-xl-4 col-lg-4 col-md-12">
+					<h3><i class="icon-feather-mail"></i> Sign Up For a Newsletter</h3>
+					<p>Weekly breaking news, analysis and cutting edge advices on job searching.</p>
+					<form action="#" method="get" class="newsletter">
+						<input type="text" name="fname" placeholder="Enter your email address">
+						<button type="submit"><i class="icon-feather-arrow-right"></i></button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Middle Section / End -->
+	
+	<!-- Footer Copyrights -->
+	<div class="footer-bottom-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+					© 2018 <strong>Hireo</strong>. All Rights Reserved.
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Copyrights / End -->
+
+</div>
+<!-- Footer / End -->
+
+</div>
+<!-- Wrapper / End -->
+

@@ -1,0 +1,164 @@
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+	<!-- Dashboard Container -->
+	<div class="dashboard-container">
+		<!-- <app-sidebar></app-sidebar> -->
+		<!-- Dashboard Content
+        ================================================== -->
+ 
+		<div class="dashboard-content-container" data-simplebar>
+			<div class="dashboard-content-inner" >
+				<!-- Dashboard Headline -->
+				<div class="dashboard-headline">
+					<h3>CV & Cover Letter</h3>
+					<!-- Breadcrumbs -->
+					<nav id="breadcrumbs" class="dark">
+						<ul>
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Control panel</a></li>
+							<li>CV</li>
+						</ul>
+					</nav>
+                </div>
+
+				<!-- Row -->
+				<div class="row"> 
+                    <!-- Dashboard Box -->
+					<div class="col-xl-12" >
+						<div class="dashboard-box margin-top-0 ">
+							<!-- Headline -->
+							<div class="headline">
+								<h3><i class="icon-material-outline-account-circle"></i>Profile image</h3>
+                            </div>
+                            <form [formGroup]="imageForm">
+                                <div class="content with-padding padding-bottom-0">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div *ngIf="fileUploadProgress">
+                                                <div class="progress0">
+                                                    <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': fileUploadProgress , 'height': '10px' }" ></div>
+                                                </div>
+                                              </div>
+                                             <div class="" data-tippy-placement="bottom" title="Change Avatar">
+                                                <img [src]="selectedFile" file accept='image/*' *ngIf="selectedFile" />
+                                                <input class="file-upload" formControlName='profileImage' ng2FileSelect [uploader]="uploader" (onFileSelected)="OnFileSelect($event)"  (change)="fileProgress($event)"  type="file" accept="image/*" 
+                                                 required/>
+                                            </div>	
+                                        </div>
+                                    </div>
+                                 </div>
+                                <div class="input-with-icon-left" >
+                                    <input type="submit"  (click)="image(imageForm)" class="button  ripple-effect margin-top-10" value="Save">
+                                  </div>
+                              </form>
+						</div>
+                    </div>
+
+                  	<!-- Dashboard Box -->
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<!-- Headline -->
+							<div class="headline">
+								<h3><i class="icon-material-outline-account-circle"></i>Account</h3>
+                            </div>
+                            <form [formGroup]="cvForm">
+                                <div class="content with-padding padding-bottom-0">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                                <div class="col-md-6" >
+                                                    <div class="submit-field form-group" 
+                                                     [ngClass]="{'has-error': cvForm.get('firstName').errors &&
+                                                                 (cvForm.get('firstName').touched || cvForm.get('firstName').dirty)}">
+                                                        <h5 class="control-label">Firstname</h5>
+                                                        <input  type="text" class="form-control" formControlName='firstName' >
+                                                        <span class="help-block" *ngIf="cvForm.get('firstName').errors &&
+                                                        (cvForm.get('firstName').touched || cvForm.get('firstName').dirty)">
+                                                        <span  *ngIf="cvForm.get('firstName').errors.required">firstName is  Required</span>
+                                                        <span  *ngIf="cvForm.get('firstName').errors.minlength || cvForm.get('firstName').errors.maxlength">Min length is 8 & max length is 10</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+        
+                                                <div class="col-md-6">
+                                                    <div class="submit-field"
+                                                    [ngClass]="{'has-error': cvForm.get('lastName').errors &&
+                                                                 (cvForm.get('lastName').touched || cvForm.get('lastName').dirty)}">
+                                                        <h5 class="control-label">Last name</h5>
+                                                        <input type="text" class="form-control" formControlName='lastName' value="Smith">
+                                                        <span class="help-block" *ngIf="cvForm.get('lastName').errors &&
+                                                        (cvForm.get('lastName').touched || cvForm.get('lastName').dirty)">
+                                                        <span  *ngIf="cvForm.get('lastName').errors.required">Lastname is Required</span>
+                                                        <span  *ngIf="cvForm.get('lastName').errors.minlength || cvForm.get('lastName').errors.maxlength">min length is 6 & max length is 10</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+        
+                                                <div class="col-md-6"  >
+                                                    <div class="submit-field"
+                                                    [ngClass]="{'has-error': cvForm.get('phoneNumber').errors &&
+                                                                 (cvForm.get('phoneNumber').touched || cvForm.get('phoneNumber').dirty)}">
+                                                <!-- Phone Number -->
+                                                <h5 class="control-label">PhoneNumber</h5>
+                                                 <div class="input-group phoneBox " >
+                                                            <span class="dropDown">
+                                                                <ng-select 
+                                                                maxLength="30"
+                                                                [items]="countries"
+                                                                [bindLabel]="'phoneCode'"
+                                                                bindValue="phoneCode"
+                                                                formControlName="phoneCode">
+                                                                <ng-template  ng-label-tmp let-item="item">
+                                                                          {{item.phoneCode}}																	  <img height="30" width="30" [src]="item.flag"/>
+                                                                      </ng-template>
+                                                                      <ng-template  ng-option-tmp let-item="item" let-index="index">
+                                                                        <img height="15" width="15" [src]="item.flag"/>
+                                                                        <b>{{item.phoneCode}}</b>
+                                                                    </ng-template>
+                                                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                                    <b>{{item.phoneCode}}</b>
+                                                                    <img height="20" width="20" [src]="item.flag"/>
+                                                                </ng-template>	
+                                                                </ng-select>
+                                                            </span>
+                                                          <input class="tel" type="tel" minlength="11"  maxlength="11" formControlName="phoneNumber" placeholder="Phone Number" >
+                                                        </div>
+                                                 </div>
+                                                </div>
+        
+                                                <div class="col-md-6">
+                                                    <div class="submit-field" [ngClass]="{'has-error': cvForm.get('email').errors &&
+                                                    (cvForm.get('email').touched || cvForm.get('email').dirty)}">
+                                                        <h5 class="control-label">Email</h5>
+                                                        <input type="text" formControlName='email'  class="form-control" value="tom@example.com">
+                                                        <span class="help-block" *ngIf="cvForm.get('email').errors &&
+                                                        (cvForm.get('email').touched || cvForm.get('email').dirty)">
+                                                        <span  *ngIf="cvForm.get('email').errors.required">Email is Required</span>
+                                                        <span  *ngIf="cvForm.get('email').errors.email">Email is not correct</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                <div class="input-with-icon-left" >
+                                    <input type="submit"  (click)="account(cvForm)" class="button  ripple-effect margin-top-10" value="Save">
+                                  </div>
+                              </form>
+						</div>
+                    </div>
+                   
+				</div>
+				<!-- Row / End -->
+			</div>
+		</div>	
+		<!-- Dashboard Content / End -->
+	</div>
+	<!-- Dashboard Container / End -->
+	</div>
+	<!-- Wrapper / End -->
+	
+	
+	
+

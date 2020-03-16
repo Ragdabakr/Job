@@ -1,0 +1,24 @@
+.ngx-pagination .current {
+  border-radius: 1px;
+}
+.sidebar-search-button-container {
+  bottom: auto !important;
+}
+.save-job-search-container{
+    padding: 40px;
+    padding-top: 10px;
+    z-index: 100;
+    background-color: #fafafa;
+}
+.job-listing-details {
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-align: start;
+  align-items: flex-start;
+  padding: 30px;
+  padding-bottom: 10px;
+}
+.job-listing{
+  cursor: pointer;
+}

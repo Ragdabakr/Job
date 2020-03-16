@@ -1,0 +1,166 @@
+					<!-- Dashboard Box -->
+					<div class="col-xl-12">
+							<div class="dashboard-box">
+		
+								<!-- Headline -->
+								<div class="headline">
+									<h3><i class="icon-material-outline-face"></i>Profile</h3>
+								</div>
+		
+								<div class="content">
+									<ul class="fields-ul">
+									<li>
+										<div class="row">
+											<div class="col-xl-6">
+												<div class="submit-field">
+													<h5 class="control-label">BirthDay</h5>
+													<input type="text" formControlName='birthDate' id="birthDate" name="birthDate"   bsDatepicker [bsConfig]='datePickerConfig'  class="form-control" >
+												</div>
+											</div>
+		
+											<div class="col-xl-6">
+													<div class="submit-field">
+														<h5>Nationality</h5>
+														<select *ngIf='localLang === "en"' class="with-border  custom-select" data-size="7" formControlName="nationality"    data-live-search="true">
+															<option  selected value="null">Choose your nationality</option>
+															<option *ngFor='let country of countries'  value="{{country.enNationality}}">{{ country.enNationality}}</option>
+														</select>
+													</div>
+											</div>
+											
+											<div class="col-xl-6">
+													<div class="submit-field">
+														<h5>Country</h5>
+														<select *ngIf='localLang === "en"' class="with-border"    data-size="7" formControlName="country"  title="Select Job Type" data-live-search="true" data-live-search="true">
+															<option  selected value="null">Choose your country</option>
+															<option *ngFor='let country of countries'  value="{{country.enCountryName}}">{{ country.enCountryName}}</option>
+														</select>
+													</div>
+											</div>
+		
+											<div class="col-xl-6">
+													<div class="submit-field" [ngClass]="{'has-error': profileForm.get('title').errors &&
+													(profileForm.get('title').touched || profileForm.get('title').dirty)}" >
+														<h5>Tagline</h5>
+														<input type="text" class="with-border"  formControlName='title'  value="iOS Expert + Node Dev">
+														<span class="help-block" *ngIf="profileForm.get('title').errors &&
+														(profileForm.get('title').touched || profileForm.get('title').dirty)">
+														<span  *ngIf="profileForm.get('title').errors.required">Tagline is required</span>
+														<span  *ngIf="profileForm.get('title').errors.minlength || profileForm.get('title').errors.maxlength">min length is 3 & max length is 10</span>
+														</span>
+													</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="row">
+												<div class="col-xl-6">
+														<div class="submit-field">
+															<h5>Attachment</h5>
+															<div *ngIf="progress2">
+																<div class="progress">
+																	<div class="progress-bar progress-bar-animated" [ngStyle]="{'width': currentFileUpload?.progress + '%' }"></div>
+																</div>
+															</div>
+															<!-- Attachments -->
+															<div class="attachments-container margin-top-0 margin-bottom-0">
+																<div class="attachment-box ripple-effect">
+																	<span>CV</span>
+																	<input (change)="detectPdfs($event)" formControlName="cv" type="file" accept="image/*, application/pdf" id="upload"/>
+																	<button class="remove-attachment" data-tippy-placement="top" title="Remove"></button>
+																</div>
+															</div>
+															<div class="clearfix"></div>
+															<!-- Upload Button -->
+															<div class="uploadButton margin-top-0">
+																<label class="uploadButton-button ripple-effect" (click)="uploadPdf()" >Upload</label>
+															</div>
+														</div>
+													</div>
+												 <div class="col-xl-6" [formGroup]="profileForm"  >
+														<div class="submit-field" formArrayName ="skills"  >
+															<h5>Skills<i class="help-icon" data-tippy-placement="right" title="Add up to 10 skills"></i></h5>
+															
+															<div class="keywords-container" *ngFor="let item of profileForm.get('skills').controls; let i = index;" >
+															<div class="keyword-input-container"   [formGroupName] ='i'>
+																<input type="text" formControlName="skillName" class="keyword-input with-border" placeholder="e.g. Angular, Laravel"/>
+																<button (click)="addSkillsButtonClick()" class="keyword-input-button ripple-effect"><i class="icon-material-outline-add"></i></button>
+															</div>
+															</div>
+															<ul *ngFor="let mySkill of allSkills">
+																	<li class="keyword"><span class="keyword-remove"></span><span >{{mySkill.skillName}}</span></li>
+															</ul>
+															<div class="clearfix"></div>
+														</div>
+											</div>
+										
+											<div class="col-xl-12">
+												<div class="submit-field" [ngClass]="{'has-error': profileForm.get('about').errors &&
+												(profileForm.get('about').touched || profileForm.get('about').dirty)}">
+													<h5 class="control-label">{{'profileSettings.about' | translate}}</h5>
+													<textarea cols="30" rows="5" formControlName='about' minlength="10" maxlength="255" class="form-control" ></textarea>
+													<span class="help-block" *ngIf="profileForm.get('about').errors &&
+														(profileForm.get('about').touched || profileForm.get('about').dirty)">
+														<span  *ngIf="profileForm.get('about').errors.required">About is required</span>
+														<span  *ngIf="profileForm.get('about').errors.minlength || profileForm.get('about').errors.maxlength">min length is 10 and max length is 100</span>
+													</span>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+								</div>
+							</div>
+						</div>
+							<!-- Dashboard Box -->
+					<div class="col-xl-12">
+							<div class="dashboard-box">
+								<!-- Headline -->
+								<div class="headline">
+									<h3><i class="icon-material-outline-face"></i>Job history</h3>
+								</div>
+								<div class="content top">
+									<div class="row">
+										<div class="col-xl-12" [formGroup]="profileForm">
+												<div class="submit-field" formArrayName ="jobHistories">
+													<div class="keywords-container" *ngFor="let item of profileForm.get('jobHistories').controls; let i = index;" >
+													<div class="keyword-input-container"   [formGroupName] ='i'>
+															<div class="form-group  col-md-6">
+																	<label for="JobTitle">Job name</label>
+																	<input type="text" formControlName ="jobName" class="form-control" id="JobTitle">
+																</div>
+																<div class="form-group col-md-6">
+																	<label for="CompanyTitle">Company name</label>
+																	<input type="text" formControlName ="companyName" class="form-control" id="CompanyTitle">
+																 </div>
+																<div class="form-group col-md-6">
+																	<label for="EndDate">End date</label>
+																	<input type="text" formControlName ="endYear"  class="form-control" name="endYear"   bsDatepicker [bsConfig]='datePickerConfig'  id="EndDate">
+																 </div>
+																 <div class="form-group col-md-6">
+																		<label for="StartDate">Start date</label>
+																		<input type="text" formControlName ="startYear"   name="startYear"   bsDatepicker [bsConfig]='datePickerConfig' class="form-control" id="StartDate">
+																</div>
+																<div class="form-group col-md-12">
+																  <label for="JobSummary">Job summary</label>
+																  <textarea cols="30" rows="5" type="expYear" formControlName ="jobSummary"  class="form-control"></textarea>
+																</div>
+														<button (click)="addJobsButtonClick()" class="ripple-effect addJob">save</button>
+													   </div>
+													</div>
+													<ul *ngFor="let jobHistory of allJobHistories">
+														<li class="keyword"><span class="keyword-remove"></span><span >{{jobHistory.jobName}}</span></li>
+													</ul>
+													<div class="clearfix"></div>
+												</div>
+											</div>
+										</div>			
+									</div>
+								</div>
+							<!-- </div> -->
+						</div>
+					<!-- Button -->
+					<div class="col-xl-12 submitDiv">
+						<a (click)="saveForm(profileForm)"  disabled="!profileForm.valid"
+						class="addJob ">Save</a>
+					</div>

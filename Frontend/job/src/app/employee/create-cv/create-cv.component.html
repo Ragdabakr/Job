@@ -1,0 +1,363 @@
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+	<!-- Dashboard Container -->
+	<div class="dashboard-container">
+		<!-- <app-sidebar></app-sidebar> -->
+		<!-- Dashboard Content
+        ================================================== -->
+ 
+		<div class="dashboard-content-container" data-simplebar>
+			<div class="dashboard-content-inner" >
+				<!-- Dashboard Headline -->
+				<div class="dashboard-headline">
+					<h3>CV & Cover Letter</h3>
+					<!-- Breadcrumbs -->
+					<nav id="breadcrumbs" class="dark">
+						<ul>
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Control panel</a></li>
+							<li>CV</li>
+						</ul>
+					</nav>
+                </div>
+
+				<!-- Row -->
+				<div class="row"> 
+                    <!-- Dashboard Box -->
+					<div class="col-xl-12" >
+						<div class="dashboard-box margin-top-0 ">
+							<!-- Headline -->
+							<div class="headline">
+								<h3><i class="icon-material-outline-account-circle"></i>Profile image</h3>
+                            </div>
+                            <form [formGroup]="imageForm">
+                                <div class="content with-padding padding-bottom-0">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div *ngIf="fileUploadProgress">
+                                                <div class="progress0">
+                                                    <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': fileUploadProgress , 'height': '10px' }" ></div>
+                                                </div>
+                                              </div>
+                                             <div class="" data-tippy-placement="bottom" title="Change Avatar">
+                                                <img [src]="selectedFile" file accept='image/*' *ngIf="selectedFile" />
+                                                <input class="file-upload" formControlName='profileImage' ng2FileSelect [uploader]="uploader" (onFileSelected)="OnFileSelect($event)"  (change)="fileProgress($event)"  type="file" accept="image/*" 
+                                                 required/>
+                                            </div>	
+                                        </div>
+                                    </div>
+                                 </div>
+                                <div class="input-with-icon-left" >
+                                    <input type="submit"  (click)="image(imageForm)" class="button  ripple-effect margin-top-10" value="Save">
+                                  </div>
+                              </form>
+						</div>
+                    </div>
+					<!-- Dashboard Box -->
+					<div class="col-xl-12">
+						<div class="dashboard-box margin-top-0">
+							<!-- Headline -->
+							<div class="headline">
+								<h3><i class="icon-material-outline-account-circle"></i>Account</h3>
+                            </div>
+                            <form [formGroup]="cvForm">
+                                <div class="content with-padding padding-bottom-0">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                                <div class="col-md-6" >
+                                                    <div class="submit-field form-group" 
+                                                     [ngClass]="{'has-error': cvForm.get('firstName').errors &&
+                                                                 (cvForm.get('firstName').touched || cvForm.get('firstName').dirty)}">
+                                                        <h5 class="control-label">Firstname</h5>
+                                                        <input  type="text" class="form-control" formControlName='firstName' >
+                                                        <span class="help-block" *ngIf="cvForm.get('firstName').errors &&
+                                                        (cvForm.get('firstName').touched || cvForm.get('firstName').dirty)">
+                                                        <span  *ngIf="cvForm.get('firstName').errors.required">firstName is  Required</span>
+                                                        <span  *ngIf="cvForm.get('firstName').errors.minlength || cvForm.get('firstName').errors.maxlength">Min length is 8 & max length is 10</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+        
+                                                <div class="col-md-6">
+                                                    <div class="submit-field"
+                                                    [ngClass]="{'has-error': cvForm.get('lastName').errors &&
+                                                                 (cvForm.get('lastName').touched || cvForm.get('lastName').dirty)}">
+                                                        <h5 class="control-label">Last name</h5>
+                                                        <input type="text" class="form-control" formControlName='lastName' value="Smith">
+                                                        <span class="help-block" *ngIf="cvForm.get('lastName').errors &&
+                                                        (cvForm.get('lastName').touched || cvForm.get('lastName').dirty)">
+                                                        <span  *ngIf="cvForm.get('lastName').errors.required">Lastname is Required</span>
+                                                        <span  *ngIf="cvForm.get('lastName').errors.minlength || cvForm.get('lastName').errors.maxlength">min length is 6 & max length is 10</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+        
+                                                <div class="col-md-6"  >
+                                                    <div class="submit-field"
+                                                    [ngClass]="{'has-error': cvForm.get('phoneNumber').errors &&
+                                                                 (cvForm.get('phoneNumber').touched || cvForm.get('phoneNumber').dirty)}">
+                                                <!-- Phone Number -->
+                                                <h5 class="control-label">PhoneNumber</h5>
+                                                 <div class="input-group phoneBox " >
+                                                            <span class="dropDown">
+                                                                <ng-select 
+                                                                maxLength="30"
+                                                                [items]="countries"
+                                                                [bindLabel]="'phoneCode'"
+                                                                bindValue="phoneCode"
+                                                                formControlName="phoneCode">
+                                                                <ng-template  ng-label-tmp let-item="item">
+                                                                          {{item.phoneCode}}																	  <img height="30" width="30" [src]="item.flag"/>
+                                                                      </ng-template>
+                                                                      <ng-template  ng-option-tmp let-item="item" let-index="index">
+                                                                        <img height="15" width="15" [src]="item.flag"/>
+                                                                        <b>{{item.phoneCode}}</b>
+                                                                    </ng-template>
+                                                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                                    <b>{{item.phoneCode}}</b>
+                                                                    <img height="20" width="20" [src]="item.flag"/>
+                                                                </ng-template>	
+                                                                </ng-select>
+                                                            </span>
+                                                          <input class="tel" type="tel" minlength="11"  maxlength="11" formControlName="phoneNumber" placeholder="Phone Number" >
+                                                        </div>
+                                                 </div>
+                                                </div>
+        
+                                                <div class="col-md-6">
+                                                    <div class="submit-field" [ngClass]="{'has-error': cvForm.get('email').errors &&
+                                                    (cvForm.get('email').touched || cvForm.get('email').dirty)}">
+                                                        <h5 class="control-label">Email</h5>
+                                                        <input type="text" formControlName='email'  class="form-control" value="tom@example.com">
+                                                        <span class="help-block" *ngIf="cvForm.get('email').errors &&
+                                                        (cvForm.get('email').touched || cvForm.get('email').dirty)">
+                                                        <span  *ngIf="cvForm.get('email').errors.required">Email is Required</span>
+                                                        <span  *ngIf="cvForm.get('email').errors.email">Email is not correct</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                <div class="input-with-icon-left" >
+                                    <input type="submit"  (click)="account(cvForm)" class="button  ripple-effect margin-top-10" value="Save">
+                                  </div>
+                              </form>
+						</div>
+                    </div>
+                    
+                    	<!-- Dashboard Box -->
+					<div class="col-xl-12">
+                        <div class="dashboard-box">
+                            <!-- Headline -->
+                            <div class="headline">
+                                <h3><i class="icon-material-outline-face"></i>Profile</h3>
+                            </div>
+                            <form [formGroup]="profileForm">
+                            <div class="content">
+                                <ul class="fields-ul">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="submit-field">
+                                                <h5 class="control-label">BirthDay</h5>
+                                                <input type="date" formControlName='birthDate' id="birthDate" name="birthDate"  bsDatepicker   class="form-control" >
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                                <div class="submit-field">
+                                                    <h5>Nationality</h5>
+                                                    <select  class="with-border  custom-select" data-size="7" formControlName="nationality"    data-live-search="true">
+                                                        <option  selected value="null">Choose your nationality</option>
+                                                        <option *ngFor='let country of countries'  value="{{country.enNationality}}">{{ country.enNationality}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        
+                                        <div class="col-md-6">
+                                                <div class="submit-field">
+                                                    <h5>Country</h5>
+                                                    <select  class="with-border" data-size="7" formControlName="country"  title="Select Job Type" data-live-search="true" data-live-search="true">
+                                                        <option  selected value="null">Choose your country</option>
+                                                        <option *ngFor='let country of countries'  value="{{country.enCountryName}}">{{ country.enCountryName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+    
+                                        <div class="col-md-6">
+                                                <div class="submit-field" [ngClass]="{'has-error': profileForm.get('title').errors &&
+                                                (profileForm.get('title').touched || profileForm.get('title').dirty)}" >
+                                                    <h5>Tagline</h5>
+                                                    <input type="text" class="with-border"  formControlName='title'  value="iOS Expert + Node Dev">
+                                                    <span class="help-block" *ngIf="profileForm.get('title').errors &&
+                                                    (profileForm.get('title').touched || profileForm.get('title').dirty)">
+                                                    <span  *ngIf="profileForm.get('title').errors.required">Tagline is required</span>
+                                                    <span  *ngIf="profileForm.get('title').errors.minlength || profileForm.get('title').errors.maxlength">min length is 3 & max length is 10</span>
+                                                    </span>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="submit-field" [ngClass]="{'has-error': profileForm.get('about').errors &&
+                                            (profileForm.get('about').touched || profileForm.get('about').dirty)}">
+                                                <h5 class="control-label">About</h5>
+                                                <textarea cols="30" rows="5" formControlName='about' minlength="10" maxlength="255" class="form-control" ></textarea>
+                                                <span class="help-block" *ngIf="profileForm.get('about').errors &&
+                                                    (profileForm.get('about').touched || profileForm.get('about').dirty)">
+                                                    <span  *ngIf="profileForm.get('about').errors.required">About is required</span>
+                                                    <span  *ngIf="profileForm.get('about').errors.minlength || profileForm.get('about').errors.maxlength">min length is 10 and max length is 100</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            </div>
+                            <div class="input-with-icon-left" >
+                            <input type="submit"  (click)="profile(profileForm)" class="button  ripple-effect margin-top-10" value="Save">
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+	                
+                    <div class="col-xl-12">
+                        <div class="dashboard-box ">
+                          <!-- Headline -->
+                            <div class="headline">
+                                <h3><i class="icon-material-outline-face"></i>Skills</h3>
+                            </div>
+                           
+                            <form [formGroup]="skillForm">
+                              <div class="content content-skill">
+                                    <div class="row">
+                                             <div class="col-md-6" [formGroup]="skillForm"  >
+                                                    <div class="submit-field" formArrayName ="skills"  >
+                                                        <div class="input-with-icon-left" >
+                                                            <input type="submit"  (click)="addSkillsButtonClick()" class="button  ripple-effect margin-top-10" value="Add New Skill">
+                                                        </div>
+                                                        <div class="keywords-container" *ngFor="let item of skillForm.get('skills').controls; let i = index;" >
+                                                        <div class="keyword-input-container"   [formGroupName] ='i'>
+                                                            <input type="text" formControlName="skillName" class="keyword-input with-border" placeholder="e.g. Angular, Laravel"/>
+                                                        </div>
+                                                        </div>
+                                                        <ul *ngFor="let mySkill of allSkills">
+                                                                <li class="keyword"><span class="keyword-remove"></span><span >{{mySkill.skillName}}</span></li>
+                                                        </ul>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                 </div>   
+                                         </div>
+                              </div>
+                              <div class="input-with-icon-left" >
+                                <input type="submit"  (click)="skills(skillForm)" class="button  ripple-effect margin-top-10" value="Save">
+                            </div>
+                             
+                        </form>
+                         
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="dashboard-box">
+                            <!-- Headline -->
+                            <div class="headline">
+                                <h3><i class="icon-material-outline-face"></i>Job history</h3>
+                            </div>
+                            <form [formGroup]="jobForm">
+                            <div class="content top">
+                                <div class="row">
+                                    <div class="col-md-12" [formGroup]="jobForm">
+
+                                            <div class="submit-field" formArrayName ="jobHistories">
+                                                <div class="input-with-icon-left" >
+                                                    <input type="submit"  (click)="addJobsButtonClick()" class="button  ripple-effect margin-top-10" value="Add New job History">
+                                                </div>
+                                                <div class="keywords-container" *ngFor="let item of jobForm.get('jobHistories').controls; let i = index;" >
+                                                <div class="keyword-input-container"   [formGroupName] ='i'>
+                                        
+                                                        <div class="form-group  col-md-6">
+                                                                <label for="JobTitle">Job name</label>
+                                                                <input type="text" formControlName ="jobName" class="form-control" id="JobTitle">
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="CompanyTitle">Company name</label>
+                                                                <input type="text" formControlName ="companyName" class="form-control" id="CompanyTitle">
+                                                             </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="EndDate">End date</label>
+                                                                <input type="date" formControlName ="endYear"  class="form-control" name="endYear"   bsDatepicker id="EndDate">
+                                                             </div>
+                                                             <div class="form-group col-md-6">
+                                                                    <label for="StartDate">Start date</label>
+                                                                    <input type="date" formControlName ="startYear"   name="startYear"   bsDatepicker  class="form-control" id="StartDate">
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                              <label for="JobSummary">Job summary</label>
+                                                              <textarea cols="30" rows="5" type="expYear" formControlName ="jobSummary"  class="form-control"></textarea>
+                                                            </div>
+                                                     </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </div>			
+                             </div>
+                             <div class="input-with-icon-left" >
+                                <input type="submit"  (click)="jobs(jobForm)" class="button  ripple-effect margin-top-10" value="Save">
+                            </div>
+                        </form>
+                            </div>
+                        <!-- </div> -->
+                    </div>
+
+                    <!-- Dashboard Box -->
+					<div class="col-xl-12" >
+						<div class="dashboard-box">
+							<!-- Headline -->
+							<div class="headline">
+								<h3><i class="icon-material-outline-account-circle"></i>CV</h3>
+                            </div>
+                            <form [formGroup]="pdfForm">
+                                <div class="content with-padding padding-bottom-0">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div *ngIf="pdfUploadProgress">
+                                                <div class="progress0">
+                                                    <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': pdfUploadProgress , 'height': '10px' }" ></div>
+                                                </div>
+                                              </div>
+                                              <div class="attachments-container margin-top-0 margin-bottom-0">
+                                                <div class="attachment-box ripple-effect">
+                                                    <input class="file-upload" formControlName='pdf' ng2FileSelect [uploader]="uploader" (onFileSelected)="OnPdfSelect($event)"   type="file" accept="image/*, application/pdf" 
+                                                 required/>
+                                                </div>
+                                            </div>
+                                             	
+                                        </div>
+                                    </div>
+                                 </div>
+                                <div class="input-with-icon-left" >
+                                    <input type="submit"  (click)="pdf(pdfForm)" class="button  ripple-effect margin-top-10" value="Save">
+                                </div>
+                              </form>
+						</div>
+                    </div>
+                   
+				</div>
+				<!-- Row / End -->
+			</div>
+		</div>	
+		<!-- Dashboard Content / End -->
+	</div>
+	<!-- Dashboard Container / End -->
+	</div>
+	<!-- Wrapper / End -->
+	
+	
+	
+

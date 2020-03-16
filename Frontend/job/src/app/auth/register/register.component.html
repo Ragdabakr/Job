@@ -1,0 +1,115 @@
+
+<!-- Page Content
+================================================== -->
+<div class="container margin-top-150" >
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="login-register-page">
+				<div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade in">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<p >{{errorMessage}}</p>
+					</div>
+					<div *ngIf="successMessage" class="alert alert-success alert-dismissible fade in">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p>{{successMessage}}</p>
+					</div>
+					
+				<!-- Welcome Text -->
+				<div class="welcome-text">
+          <h3 style="font-size: 26px;">سجل معنا الان</h3>
+          <span>هل لديك حساب؟ <a href="/login">دخول</a></span>
+				</div>
+				 <!-- Account Type -->
+         <div class="account-type">
+          <div [class.has-error]='role.invalid && role.touched'>
+			  <input type="radio" value="employee" id="freelancer-radio" class="account-type-radio"
+			         [(ngModel)]='formData.role'
+					 name='role'
+					 #role='ngModel'
+			  >
+              <label for="freelancer-radio" class="ripple-effect-dark"><i class="icon-material-outline-account-circle"></i> باحث عن عمل</label>
+            </div>
+  
+            <div>
+			  <input type="radio" value="employeer" id="employer-radio" class="account-type-radio"
+			    [(ngModel)]='formData.role'
+			    name='role'
+				#role='ngModel'
+			  />
+			  <label for="employer-radio" value="employee" class="ripple-effect-dark"><i class="icon-material-outline-business-center"
+				></i>صاحب عمل</label>
+			</div>
+			<span class="help-block" *ngIf='role.touched && role.errors && role.errors.required'>Role is required</span>
+         </div>
+                    
+				<!-- Form -->
+				<form method="post" id="login-form" #registerForm='ngForm' >
+						<div class="form-group input-with-icon-left"
+						[class.has-error]='email.invalid && email.touched'
+						[class.has-success]='email.valid'>
+						<i class="icon-material-baseline-mail-outline"></i>
+						<input type="text" class="form-control input-text"
+						 [(ngModel)]='formData.email'
+						 placeholder="xx@gmail.com"
+						 name='email'
+						 #email='ngModel'
+						 pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+						 required>
+						<span class="help-block" *ngIf='email.touched && email.errors && email.errors.required'>Email is required</span>
+                        <span class="help-block" *ngIf='email.errors && email.errors.pattern'>Email is invalid</span>
+					</div>
+				   <div ngModelGroup='passwordGroup' #passwordGroup='ngModelGroup' appConfirmEqualValidator
+					[class.has-error]="passwordGroup.errors?.notEqual && !confirmPassword.errors?.required "
+					[class.has-success]="passwordGroup.valid">
+					<div class="input-with-icon-left" [class.has-error]='password.touched && password.invalid'>
+						<i class="icon-material-outline-lock"></i>
+						<input type="password" class="form-control input-text" id="password" placeholder="Password"
+						[(ngModel)]='formData.password'
+						 name='password'
+						 #password='ngModel'
+						 minlength="6"
+						 maxlength="20"
+						 pattern="^(?=.*\d)(?=.*[A-Z]).*$"
+						 required/>
+						 <span class="help-block" *ngIf="password.touched && password.errors?.required">Password is required</span>
+						 <span class="help-block" *ngIf="password.touched && password.errors?.minlength">Password is min length 6</span>
+						 <span class="help-block" *ngIf="password.touched && password.errors?.pattern">Password must  contain at least one capital letter and one  number</span>
+                    </div>
+                    <div class="input-with-icon-left"  [class.has-error]="confirmPassword.touched && confirmPassword.invalid">
+						<i class="icon-material-outline-lock"></i>
+						<input type="password" class=" form-control input-text"  id="confirmPassword" placeholder="Confirm Password"
+						[(ngModel)]='formData.confirmPassword'
+						 name='confirmPassword'
+						 #confirmPassword='ngModel'
+					     required/>
+						<span class="help-block" *ngIf="confirmPassword.touched && confirmPassword.errors?.required">Confirm Password is required</span>
+						<span class="help-block"
+						*ngIf="confirmPassword.touched && passwordGroup.errors?.notEqual &&
+							   !confirmPassword.errors?.required">
+					           Password and Confirm Password does not match
+					    </span>
+					</div>
+				</div>
+				
+				<div class="input-with-icon-left" >
+                 <input type="submit"  (click)="register(formData)" [disabled]='registerForm.invalid'  class="button  ripple-effect margin-top-10" value="تسجيل">
+				</div>
+			</form>
+				<!-- Social Login -->
+			<div class="social-login-separator margin-top-10"><span>or</span></div>
+				<div class="social-login-buttons margin-top-10">
+						<button class="facebook-login ripple-effect" (click)="FacebookAuth()"><i class="icon-brand-facebook-f"></i> Log In via Facebook</button>
+						<button class="google-login ripple-effect" (click)="GoogleAuth()"><i class="icon-brand-google-plus-g"></i> التسجيل عن طريق Google</button> 
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<!-- Spacer -->
+<div class="margin-top-70"></div>
+<!-- Spacer / End-->
+
+
+
+    
