@@ -48,7 +48,7 @@ app.use('/api/v1/auth', require('./routes/auth'));
 app.use('/api/v1/lookup', require('./routes/lookup'));
 app.use('/api/v1/image', require('./routes/image'));
 app.use('/api/v1/employee', require('./routes/employee'));
-app.use('/api/v1/employeer', require('./routes/employer'));
+app.use('/api/v1/employer', require('./routes/employer'));
 app.use('/api/v1/jobs', require('./routes/jobs'));
 
 const PORT = process.env.PORT || 3000;
