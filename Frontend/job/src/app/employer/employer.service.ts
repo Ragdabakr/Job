@@ -14,7 +14,7 @@ public getCountries(): Observable<any> {
 }
 
 public postJob(userId ,  jobForm ): Observable<any> {
-  return this.http.post(`/api/v1/employeer/postJob` , {userId , jobForm });
+  return this.http.post(`/api/v1/employer/postJob` , {userId , jobForm });
 }
 public sendProfileImage(image: string): Observable<any> {
   return this.http.post('/api/v1/image/upload-image', {image} , {
@@ -23,16 +23,16 @@ public sendProfileImage(image: string): Observable<any> {
   });
 }
 public createProfileForm(userId , cvForm: any ,text ): Observable<any> {
-  return this.http.post('/api/v1/employeer/create-profile' , {userId , cvForm , text});
+  return this.http.post('/api/v1/employer/create-profile' , {userId , cvForm , text});
  }
  public findOpenJobs(userId): Observable<any> {
-  return this.http.get(`/api/v1/employeer/openJobs/${userId}`);
+  return this.http.get(`/api/v1/employer/openJobs/${userId}`);
 } 
 public createSocial( socialForm: any): Observable<any> {
-  return this.http.post('/api/v1/employeer/create-social' , {socialForm});
+  return this.http.post('/api/v1/employer/create-social' , {socialForm});
  }
  public createCompanyBookmark(companyId): Observable<any> {
-  return this.http.post('/api/v1/employeer/create-bookmark-company' , {companyId});
+  return this.http.post('/api/v1/employer/create-bookmark-company' , {companyId});
  }
 
 }
