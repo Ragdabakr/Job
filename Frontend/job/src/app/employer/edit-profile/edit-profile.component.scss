@@ -1,0 +1,111 @@
+select{
+    padding: 1px 15px; 
+ }
+ .input-group {
+    padding-top: 15px;
+ }
+ input {
+    border: 1px solid #e0e0e0;
+    padding-right: 60px !important;
+    box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.05);
+ }
+ .form-control:focus {
+    border:1px solid #ccc;
+ }
+ .margin-top-10{
+   margin:30px;
+ }
+ #file{
+    margin-top: 5px;
+ }
+ .btn{
+    margin-bottom: 5px;
+ }
+ .profile-pic{
+    border:1px solid #ffffff;
+    border-radius: 5px;
+ }
+ .attachments-container {
+    width: 800px;
+ }
+ .button{
+    color:#ffffff;
+    cursor: pointer;
+ }
+ 
+ .button{
+    color:#ffffff;
+ }
+ .phoneBox{
+    position: relative;
+ }
+ .phoneBox span{
+    position: absolute;
+    margin-right: 10px;
+ }
+ input[_ngcontent-gom-c2] {
+    border: 1px solid #e0e0e0;
+    padding-right: 120px !important;
+    box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.05);
+ }
+ .ng-select.ng-select-single .ng-select-container .ng-value-container, .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
+    padding: 5px 10px;
+ }
+ .tel{
+    padding: 1px 170px !important;
+    width: 550px;
+    margin-top: -13px;
+ }
+ .dropDown {
+    width: 150px !important;
+    background-color: #ffffff !important;
+ }
+ .ng-dropdown-panel  {
+ background-color: #ffffff !important;
+ }
+ .addJob{
+    background-color:#9237CB;
+    color:#ffffff !important;
+    padding:15px;
+    border-radius: 5px;
+    margin: 30px;
+ }
+ .top{
+    margin:15px;
+ }
+ .margin-top-0 {
+   margin-bottom: 30px;
+   margin-top: 0px !important;
+}
+ .submitDiv{
+    margin:40px 0px;
+ }
+ .content-skill{
+    padding:20px !important;
+ }
+ .keyword {
+   margin-top: 10px;
+   background-color: rgba(146, 55, 203, 0.07);
+}
+.tel{
+    padding: 1px 170px !important;
+    width: 450px !important;
+    margin-top: -13px;
+}
+.country{
+    margin-bottom: 0px !important;
+}
+.submit-field {
+    margin-bottom: 0px; 
+    display: block;
+}
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 300px;
+}
+.form-control {
+    height: 45px;
+}
+.selectedImage{
+    width:40px;
+    height:40px
+}

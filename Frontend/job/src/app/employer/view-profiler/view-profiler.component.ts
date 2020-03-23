@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { EmployerService } from '../employer.service';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-profiler',
@@ -9,6 +10,7 @@ import * as moment from 'moment';
   styleUrls: ['./view-profiler.component.scss']
 })
 export class ViewProfilerComponent implements OnInit {
+  [x: string]: any;
   userId: any;
   companyProfile: any;
   openJobs: any;
@@ -18,14 +20,18 @@ export class ViewProfilerComponent implements OnInit {
   bookmarks: any;
   companyId: any;
   FindbookmarkedCompanies: any;
+  pageUrl: string;
 
-  constructor(private auth: AuthService , private employerService: EmployerService) { }
+  constructor(private auth: AuthService ,
+             private employerService: EmployerService,
+             private router :Router) { }
 
   ngOnInit() {
     this.getUserProfile();
     this.findOpenJobs();
   }
   getUserProfile() {
+    this.pageUrl = location.href;
     this.userId = this.auth.getUserId();
     console.log(this.userId);
     this.auth.getUserById(this.userId).subscribe((company) => {

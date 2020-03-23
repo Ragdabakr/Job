@@ -32,6 +32,7 @@ router.post('/postJob', authMiddleware ,function(req,res){
      newJob.location = req.body.jobForm.location;
      newJob.type = req.body.jobForm.type;
      newJob.category = req.body.jobForm.category;
+     newJob.expDate = req.body.jobForm.expDate;
      newJob.job = req.body.jobForm.job;
      newJob.min = req.body.jobForm.min;
      newJob.max = req.body.jobForm.max;
@@ -47,8 +48,6 @@ router.post('/postJob', authMiddleware ,function(req,res){
      
      NewJobsNotification.find({},(err , NewJobsNotification) =>{
       if(err){console.log(err);}
-      // const keyword = NewJobsNotification.filter(x => x.keyword === newJob.title);
-      // const location = NewJobsNotification.filter(y => y.location === newJob.location );
       const filter = {
         keyword: newJob.title,
         location: newJob.location
@@ -155,7 +154,7 @@ router.post('/create-social', authMiddleware ,function(req,res){
 
 });
 
-// ---------------- Find create-bookmarkUsers  route---------------- 
+// ---------------- Find create-bookmarkCompanies  route---------------- 
 
 router.post('/create-bookmark-company', authMiddleware ,function(req,res){
   const user = res.locals.user;
@@ -166,12 +165,105 @@ router.post('/create-bookmark-company', authMiddleware ,function(req,res){
           return res.status(422).send({errors: normalizeErrors(err.errors)});
         }
         //push array in to array
-        await foundUser.bookmarkCompanies.push({
-          company:companyId,
-        });
+        await foundUser.bookmarkCompanies.push(companyId);
        foundUser.save();
        return  res.json(foundUser);
      });
 });
+
+// ---------------- Delete-job route---------------- 
+
+router.post('/delete-applayUser', authMiddleware ,function(req,res){
+  const user = res.locals.user;
+  const applayUser = req.body.applayUser; 
+  const jobId = req.body.jobId; 
+  Job.findOne({_id:jobId},function(err,foundJob){
+      if (err) {
+        console.log(err);
+          return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+        //pull object from array by item
+       const arr = foundJob.jobApplicants.filter(x  => x.email !== applayUser);
+       foundJob.jobApplicants = arr;
+       foundJob.save();
+       return  res.json(foundJob);
+     });
+});
+// ---------------- Find edit-Account Form route---------------- 
+
+router.post('/edit-account-form', authMiddleware ,function(req,res){
+  const userId = req.body.userId;
+  const cvForm = req.body.cvForm;
+  const text = req.body.text;
+  User.findOne({_id:userId}, function(err,foundUser){
+    if (err) {
+        return res.status(422).send({errors: normalizeErrors(err.errors)});
+      }
+     foundUser.profile.firstName = req.body.cvForm.firstName;
+     foundUser.profile.email = req.body.cvForm.email;
+     foundUser.profile.phoneCode = req.body.cvForm.phoneCode;
+     foundUser.profile.phoneNumber= req.body.cvForm.phoneNumber;
+     foundUser.profile.country = req.body.cvForm.country;
+     foundUser.profile.city = req.body.cvForm.city;
+     foundUser.profile.street = req.body.cvForm.street;
+     foundUser.profile.about = req.body.text;
+
+      foundUser.save();
+      return  res.json(foundUser);
+   });
+});
+// ---------------- Find edit-Social Form route---------------- 
+
+router.post('/edit-social-form', authMiddleware ,function(req,res){
+  const userId = req.body.userId;
+  const socialForm = req.body.socialForm.socials[0];
+  const socialId = req.body.socialId;
+  User.findOne({_id:userId}, function(err,foundUser){
+    if (err) {
+        return res.status(422).send({errors: normalizeErrors(err.errors)});
+      }
+      var foundSocial =  foundUser.profile.socials.filter(x => x.id === socialId);
+      foundSocial[0].socialName = req.body.socialForm.socials[0].socialName;
+      foundSocial[0].socialLink = req.body.socialForm.socials[0].socialLink;
+      foundUser.save();
+      return  res.json(foundUser);
+   });
+});
+// ---------------- Find delete-Social route---------------- 
+
+router.post('/delete-social', authMiddleware , function(req,res){
+  const userId = req.body.userId; 
+  const socialId = req.body.socialId;
+  console.log('acdcdccwec',socialId );
+  User.findById({_id : userId}, function(err,foundUser){
+      if (err) {
+          console.log(err);
+          return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+        const foundSocial = foundUser.profile.socials.filter(x => x._id !== socialId);
+       console.log('accwec',foundSocial );
+       foundUser.profile.socials = foundSocial;
+       foundUser.save();
+       return  res.json(foundUser);
+   });
+});
+
+// ---------------- Find delete-userBokkmark route---------------- 
+
+router.post('/delete-userBookmark', authMiddleware , function(req,res){
+  const userId = req.body.userId; 
+  const employeeId = req.body.employeeId;
+  User.findById({_id : userId}, function(err,foundUser){
+      if (err) {
+          console.log(err);
+          return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+      const foundbookmarkUsers = foundUser.bookmarkUsers.pull(employeeId);
+       foundUser.profile.socials = foundbookmarkUsers;
+       foundUser.save();
+       return  res.json(foundUser);
+   });
+});
+
 
 module.exports = router;

@@ -1,0 +1,212 @@
+
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+		<!-- Dashboard Container -->
+		<div class="dashboard-container">
+
+	<!-- Dashboard Sidebar
+	================================================== -->
+	<div class="dashboard-sidebar">
+		<div class="dashboard-sidebar-inner" data-simplebar>
+			<app-sidebar></app-sidebar>
+		</div>
+	</div>
+	<!-- Dashboard Sidebar / End -->
+
+	<div class="clearfix"></div>
+	<!-- Header Container / End -->
+
+	<!-- Dashboard Content
+        ================================================== -->
+	<div class="dashboard-content-container" data-simplebar>
+	
+	<!-- Titlebar
+	================================================== -->
+	<div class="single-page-header" data-background-image="images/single-company.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="single-page-header-inner">
+						<div class="left-side">
+							
+							<div class="header-image"><img src="https://res.cloudinary.com/dnf8ntdmr/image/upload/v{{companyProfile.profileimage.imageVersion}}/{{companyProfile.profileimage.imageId}}.jpg" alt=""></div>
+							<div class="header-details">
+								<h3>{{companyProfile.firstName}} <span>Software House</span></h3>
+								<ul>
+									<li><img class="flag" src="images/flags/de.svg" alt=""> {{companyProfile.country}} </li>
+									<li><i class="fas fa-clipboard-check"></i>Verified</li>
+								</ul>
+							</div>
+						</div>
+						<div class="right-side">
+                            <!-- Breadcrumbs -->
+                            <button (click)="editCompanyProfile()" class="btn right btn-primary apply-now-button popup-with-zoom-anim"><i class="fa fa-edit" aria-hidden="true"></i>Edit</button>
+							<nav id="breadcrumbs" class="white">
+								<ul>
+									<li><a href="#">Home</a></li>
+									<li><a href="#">Browse Companies</a></li>
+									<li>{{companyProfile.firstName | uppercase}} </li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- Page Content
+	================================================== -->
+	<div class="container">
+		<div class="row">
+			
+			<!-- Content -->
+			<div class="col-xl-8 col-lg-8 content-right-offset">
+	
+				<div class="single-page-section">
+					<h3 class="margin-bottom-25">About Company</h3>
+					{{companyProfile.about}} 
+				</div>
+				
+				<!-- Boxed List -->
+				<div class="boxed-list margin-bottom-60">
+					<div class="boxed-list-headline">
+						<h3><i class="icon fas fa-briefcase"></i> Open Positions</h3>
+					</div>
+	                <div *ngIf="openJobs.length > 0">
+						<div class="listing" *ngFor="let job of openJobs" >
+							<!-- Job Listing -->
+							<a (click)="getJob(job._id)" class="job-listing">
+		
+								<!-- Job Listing Details -->
+								<div class="job-listing-details">
+		
+									<!-- Details -->
+									<div class="job-listing-description">
+										<h3 class="job-listing-title">{{job.title}}</h3>
+		
+										<!-- Job Listing Footer -->
+										<div class="job-listing-footer">
+											<ul>
+												<li><i class="far fa-compass"></i> {{job.location}}</li>
+												<li><i class="fas fa-briefcase"></i> {{job.type}}</li>
+												<li><i class="far fa-clock"></i> {{TimeFromNow(job.createdAt)}}</li>
+											</ul>
+										</div>
+									</div>
+		
+								</div>
+							</a>
+		
+						</div>
+	                </div>
+					<div class="listing" *ngIf="openJobs.length === 0">
+					<h2>No open jobs found</h2>
+					</div>
+	
+				</div>
+				<!-- Boxed List / End -->
+			</div>
+			<!-- Sidebar -->
+			<div class="col-xl-4 col-lg-4">
+				<div class="sidebar-container">
+	
+					<!-- Location -->
+					<div class="sidebar-widget">
+						<h3><i class="icon fas fa-location-arrow"></i> Location</h3>
+						<p>{{companyProfile.country}} / {{companyProfile.city}} / {{companyProfile.street}}  </p>
+					</div>
+					<!-- Email -->
+					<div class="sidebar-widget">
+						<h3><i class="icon far fa-envelope"></i> Email</h3>
+						<p>{{companyProfile.email}} </p>
+					</div>
+					<!-- Phone -->
+					<div class="sidebar-widget" *ngIf="companyProfile.phoneCode && companyProfile.phoneNumber" >
+						<h3><i class="icon fas fa-phone"></i> Mobile</h3>
+						<p>{{companyProfile.phoneCode}} {{companyProfile.phoneNumber}}   </p>
+					</div>
+	
+					<!-- Widget -->
+					<div class="sidebar-widget" *ngIf="socialAccounts">
+						<h3>Social Profiles</h3>
+						<div class="freelancer-socials margin-top-25">
+							<ul *ngFor="let social of socialAccounts">
+								<li (click)="getAccount(social.socialLink)" ><a  title="Facebook" data-tippy-placement="top"><i class="far fa-dot-circle"></i> {{social.socialName}}</a></li>
+							</ul>
+						</div>
+					</div>
+	
+					<!-- Sidebar Widget -->
+					<div class="sidebar-widget">
+						<h3>Bookmark or Share</h3>
+	
+						<!-- Bookmark Button -->
+						<button (click) = "bookmarkCompany()" >
+							<span class="bookmark-icon"></span>
+							<span *ngIf = '!bookmark' class="bookmark-text"><i class="far fa-bookmark"></i> Bookmark</span>
+							<span *ngIf = 'bookmark' class="bookmarked-text"><i class="fas fa-bookmark"></i> Bookmarked</span>
+						</button>
+	
+	
+						<!-- Copy URL -->
+						<div class="copy-url">
+							<input id="copy-url" type="text" value="{{pageUrl}}" class="with-border">
+							<button class="copy-url-button ripple-effect" data-clipboard-target="[pageUrl]" title="Copy to Clipboard" data-tippy-placement="top"><i class="fas fa-search"></i></button>
+						</div>
+	
+						<!-- Share Buttons -->
+						<div class="share-buttons margin-top-25">
+							<div class="">
+								<span class="share-buttons-trigger"><i class=" icon far fa-share-square"></i></span>
+								<span>Interesting? <strong>Share It!</strong></span>
+								<div class="fb-share-button" data-href="http://localhost:4200/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4200%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+							</div>
+						</div>
+					</div>
+	
+				</div>
+			</div>
+	
+		</div>
+	</div>
+	
+	
+	<!-- Spacer -->
+	<div class="margin-top-15"></div>
+	<!-- Spacer / End-->
+	
+	<!-- Footer
+	================================================== -->
+	<div id="footer">
+		
+		<!-- Footer Top Section -->
+		
+		<!-- Footer Top Section / End -->
+		
+		<!-- Footer Copyrights -->
+		<div class="footer-bottom-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-12">
+						© 2018 <strong>Hireo</strong>. All Rights Reserved.
+					</div>
+				</div>
+			</div>
+		  </div>
+		<!-- Footer Copyrights / End -->
+	  </div>
+	<!-- Footer / End -->
+	</div>
+   <!-- dashboard - content container / End -->
+  </div>
+<!-- dashboard-container / End -->
+</div>
+	<!-- Wrapper / End -->
+	
+
+	
+	

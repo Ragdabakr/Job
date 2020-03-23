@@ -129,9 +129,7 @@ router.post('/create-bookmark-users', authMiddleware ,function(req,res){
             return res.status(422).send({errors: normalizeErrors(err.errors)});
           }
           //push array in to array
-          await foundUser.bookmarkUsers.push({
-              userId :userId
-          });
+          await foundUser.bookmarkUsers.push(userId);
          foundUser.save();
          return  res.json(foundUser);
        });
@@ -212,7 +210,7 @@ router.post('/edit-skillForm', authMiddleware ,function(req,res){
 router.post('/delete-skill', authMiddleware ,function(req,res){
   const id = req.body.userId; 
   const skillId = req.body.skillId;
-  User.findById({_id : id}, async function(err,foundUser){
+  User.findById({_id : id},  function(err,foundUser){
       if (err) {
           console.log(err);
           return res.status(422).send({errors: normalizeErrors(err.errors)});
@@ -242,6 +240,32 @@ router.post('/delete-job', authMiddleware ,function(req,res){
        foundUser.save();
        return  res.json(foundUser);
    });
+});
+// ---------------- Delete-appaly-job route---------------- 
+
+router.post('/delete-applay-job', authMiddleware ,function(req,res){
+  const user = res.locals.user;
+  const jobId = req.body.jobId; 
+  User.findOne({email:user.email}, async function(err,foundUser){
+      if (err) {
+        console.log(err);
+          return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+        //pull array in to array
+        await foundUser.applayforJobs.pull(jobId);
+       foundUser.save();
+       return  res.json(foundUser);
+     });
+     Job.findOne({_id:jobId}, async function(err,job) {
+      if (err) {
+        console.log(err);
+          return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+        console.log('job',job);
+         job.jobApplicants.filter(x => x.userId !== user.id);
+        job.save();
+        return  res.json(job);
+     });
 });
 
 module.exports = router;

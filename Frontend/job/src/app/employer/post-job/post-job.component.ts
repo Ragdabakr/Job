@@ -4,6 +4,7 @@ import { EmployerService } from '../employer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-post-job',
@@ -45,6 +46,12 @@ export class PostJobComponent implements OnInit {
   successAlert: string;
   success: boolean;
   errors: any;
+
+      // ExpDate
+      datePickerConfig: Partial<BsDatepickerConfig>;
+      dateOfBirth = new Date(2017, 0, 30);
+      selectedFile: any;
+      url: any;
   constructor(
     private employerService: EmployerService ,
     private activatedRoute: ActivatedRoute,
@@ -65,6 +72,7 @@ export class PostJobComponent implements OnInit {
       type: [''],
       category: ['', [Validators.required]],
       min: [''],
+      expDate: [''],
       max: [''],
       job: ['', [Validators.required , Validators.minLength(10), Validators.maxLength(1000)]]
     });

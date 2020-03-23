@@ -108,7 +108,6 @@ router.get('/job-list',function(req,res){
       if (err) {
         return res.status(422).send({errors: normalizeErrors(err.errors)});
       }
-
       await foundJob.jobApplicants.push({
        userId:user.id,
        name:userData.firstName,
@@ -124,12 +123,8 @@ router.get('/job-list',function(req,res){
         if (err) {
           return res.status(422).send({errors: normalizeErrors(err.errors)});
         }
-        console.log(foundUser.profile.email);
-        foundUser.applayforJobs.push({
-          foundJob:foundJob.jobId,
-          createdAt:Date.now()
-        });
-        foundUser.save();
+       await foundUser.applayforJobs.push(foundJob);
+       foundUser.save();
       });
     });
  });

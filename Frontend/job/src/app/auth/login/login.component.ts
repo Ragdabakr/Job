@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
               // private translate: TranslateService,
               private as: AuthService ,
               private router: Router,
+              private auth : AuthService,
               private activatedRoute: ActivatedRoute )
     {
     // translate.addLangs(['ar' , 'en']);
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit {
 
   login(formData) {
     this.as.signIn(formData.email , formData.password ).subscribe((data) => {
+    console.log(data);
     this.getUserById();
     },
     (err) => {

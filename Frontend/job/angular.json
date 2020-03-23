@@ -25,12 +25,12 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/assets/css/bootstrap-grid.css",
+              "src/assets/css/icons.css"
             ],
             "styles": [
               "src/styles.scss",
-              "src/assets/css/icons.css",
-              "src/assets/css/bootstrap-grid.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
             ],

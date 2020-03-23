@@ -44,9 +44,9 @@ export class JobListComponent implements OnInit {
           this.savedJob = false;
         }, 5000);
    }
-   getJob(job){
+   getJob(job) {
      this.id = job._id;
-     this.router.navigate([`/job-detail/${this.id}`]);
+     this.router.navigate([`/job/job-detail/${this.id}`]);
    }
 
 

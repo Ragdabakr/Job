@@ -186,8 +186,6 @@ export class ViewProfileComponent implements OnInit {
       this.auth.getUserById(this.userId).subscribe((user) => {
         this.pdfVersion = user.profile.pdf.pdfVersion;
         this.pdfId = user.profile.pdf.pdfId;
-        console.log('jjjj', this.pdfVersion);
-        console.log('mmm', this.pdfId);
         // download cv file
         const url = 'https://res.cloudinary.com/dnf8ntdmr/image/upload/v' + this.pdfVersion +'/'+this.pdfId+'.pdf';
         console.log('url', url);

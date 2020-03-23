@@ -1,0 +1,127 @@
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+    <div class="clearfix"></div>
+    <!-- Header Container / End -->
+    
+    
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+    
+       	<!-- Dashboard Sidebar
+	================================================== -->
+	<div class="dashboard-sidebar">
+		<div class="dashboard-sidebar-inner" data-simplebar>
+			<app-sidebar></app-sidebar>
+		</div>
+	</div>
+	<!-- Dashboard Sidebar / End -->
+    
+    
+        <!-- Dashboard Content
+        ================================================== -->
+        <div class="dashboard-content-container" data-simplebar>
+            <div class="dashboard-content-inner" >
+                
+                <!-- Dashboard Headline -->
+                <div class="dashboard-headline">
+                    <h3>Manage Candidates</h3>
+                    <span class="margin-top-7">Job Applications for <a (click)='getJobLink(job._id)'>{{job.title}}</a></span>
+    
+                    <!-- Breadcrumbs -->
+                    <nav id="breadcrumbs" class="dark">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Dashboard</a></li>
+                            <li>Manage Candidates</li>
+                        </ul>
+                    </nav>
+                </div>
+        
+                <!-- Row -->
+                <div class="row">
+    
+                    <!-- Dashboard Box -->
+                    <div class="col-xl-12">
+                        <div class="dashboard-box margin-top-0">
+    
+                            <!-- Headline -->
+                            <div class="headline">
+                                <h3><i class="icon-material-outline-supervisor-account"></i>  Candidates</h3>
+                            </div>
+    
+                            <div class="content"  >
+                                <ul class="dashboard-box-list" *ngFor="let jobA of jobApplicants" >
+                                    <li>
+                                        <!-- Overview -->
+                                        <div class="freelancer-overview manage-candidates">
+                                            <div class="freelancer-overview-inner" >
+                                                <!-- Avatar -->
+                                                <!-- Name -->
+                                                <div class="freelancer-name">
+                                                    <h4 class='title'><a (click)='getApplayUser(jobA.userId)'>{{jobA.name}}<img class="flag" src="images/flags/au.svg" alt="" title="Australia" data-tippy-placement="top"></a></h4>
+    
+                                                    <!-- Details -->
+                                                    <span class="freelancer-detail-item"><i class="far fa-envelope"></i> {{jobA.email}}</span>
+                                                    <span class="freelancer-detail-item"><i class="fas fa-phone"></i> (+{{jobA.phoneCode}}) {{jobA.phoneNumber}}</span>
+                                                    <!-- Buttons -->
+                                                    <div class="buttons-to-right always-visible margin-top-25 margin-bottom-5">
+                                                        <a (click)="downloadPdf(jobA.userId)" class="button ripple-effect"><i class="fa fa-download"></i> View & Download CV</a>
+                                                        <a (click)="getApplayUser(jobA.userId)" class="button ripple-effect"><i class="fa fa-eye"></i> View Profile</a>  
+                                                        <a (click)='deleteCandidate(jobA.email)' class="button gray ripple-effect ico" title="Remove Candidate" data-tippy-placement="top"><i class="fas fa-trash"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row / End -->
+        <!-- Button -->
+
+                <!-- Footer -->
+                <div class="dashboard-footer-spacer"></div>
+                <div class="small-footer margin-top-15">
+                    <div class="small-footer-copyrights">
+                        © 2018 <strong>Hireo</strong>. All Rights Reserved.
+                    </div>
+                    <ul class="footer-social-links">
+                        <li>
+                            <a href="#" title="Facebook" data-tippy-placement="top">
+                                <i class="icon-brand-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="Twitter" data-tippy-placement="top">
+                                <i class="icon-brand-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="Google Plus" data-tippy-placement="top">
+                                <i class="icon-brand-google-plus-g"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="LinkedIn" data-tippy-placement="top">
+                                <i class="icon-brand-linkedin-in"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- Footer / End -->
+            </div>
+        </div>
+        <!-- Dashboard Content / End -->
+    
+    </div>
+    <!-- Dashboard Container / End -->
+    
+    </div>
+    <!-- Wrapper / End -->
+
+    
+  

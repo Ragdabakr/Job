@@ -84,17 +84,16 @@ const userSchema = new Schema({
   isRead :{type:Boolean ,default:false},
 }],
 bookmarkUsers :[{
-  userId : { type: Schema.Types.ObjectId, ref: 'User' },
+ type: Schema.Types.ObjectId, ref: 'User' 
 }],
 bookmarkCompanies:[{
-  company : {type:String},
-}],
+  type: Schema.Types.ObjectId, ref: 'User' 
+ }],
 postedJobs:[{
   type: Schema.Types.ObjectId, ref: 'Job' 
 }],
 applayforJobs:[{
-  foundJob: { type: Schema.Types.ObjectId, ref: 'Job' },
-  createdAt:{type:Date ,default:Date.now()},
+  type: Schema.Types.ObjectId, ref: 'Job' 
  }],
 
 });
@@ -112,14 +111,12 @@ userSchema.methods.hasSamePassword = function(requestedPassword) {
 userSchema.pre('save',function(next){
 
   const user = this;
-
 bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(user.password, salt, function(err, hash) {
         user.password = hash;
         next();
     });
   });
-
 });
 
 module.exports = User= mongoose.model('User', userSchema);

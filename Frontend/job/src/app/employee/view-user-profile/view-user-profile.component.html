@@ -1,0 +1,357 @@
+
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+	<!-- Titlebar
+	================================================== -->
+	<div class="single-page-header freelancer-header" data-background-image="images/single-freelancer.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12" *ngIf="!accountEdit">
+					<div class="single-page-header-inner" *ngIf=!editImages>
+						<div class="left-side">
+							<div class="header-image freelancer-avatar"><img src="https://res.cloudinary.com/dnf8ntdmr/image/upload/v{{userProfile.profile.profileimage.imageVersion}}/{{userProfile.profile.profileimage.imageId}}.jpg" alt="">
+							</div>
+							<div class="header-details">
+								<h3>{{userProfile.profile.firstName}} {{userProfile.profile.lastName}} <span>{{userProfile.profile.title}}</span></h3>
+								<ul>
+									<li><img class="flag" src="images/flags/de.svg" alt="">{{userProfile.profile.nationality}}</li>
+									<li><div class="verified-badge-with-title">{{userProfile.profile.email}}</div></li>
+									<li><div class="verified-badge-with-title">{{userProfile.profile.phoneCode}}{{userProfile.profile.phoneNumber}}</div></li>
+								</ul>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- Page Content
+	================================================== -->
+	<div class="container">
+		<div class="row">
+			
+			<!-- Content -->
+			<div class="col-xl-8 col-lg-8 content-right-offset">
+				
+				<!-- Page Content -->
+				
+				<div class="single-page-section" *ngIf="!editAbout">
+					<h3 class="margin-bottom-25">About Me</h3>
+					<p>{{userProfile.profile.about}}</p>
+				</div>
+				
+	
+				<!-- Boxed List -->
+				<div class="boxed-list margin-bottom-60">
+					<div class="boxed-list-headline">
+						<h3><i class="icon-material-outline-business"></i> Employment History</h3>
+					</div>
+					<div *ngIf='!editJobs && !addJob'>
+					<ul class="boxed-list-ul" *ngFor="let jobHistory of jobHistories"> 
+						<li>
+							<button (click)="deleteJob(jobHistory)" class="btn right btn-danger apply-now-button popup-with-zoom-anim"><i class="fa fa-trash" aria-hidden="true"></i></button>
+							<button (click)="editJobsData(jobHistory)" class="btn right btn-warning apply-now-button popup-with-zoom-anim"><i class="fa fa-edit" aria-hidden="true"></i></button>
+							
+							<div class="boxed-list-item">
+								<!-- Avatar -->
+								<div class="item-image">
+									<img src="/assets/img/about/company-logo.png" alt="">
+								</div>
+								
+								<!-- Content -->
+								<div class="item-content">
+									<h4>{{jobHistory.jobName}}</h4>
+									<div class="item-details margin-top-7">
+										<div class="detail-item"><a href="#"><i class="icon-material-outline-business"></i> {{jobHistory.companyName}}</a></div>
+										<div class="detail-item"><i class="icon-material-outline-date-range"></i> {{jobHistory.startYear | date}} - {{jobHistory.endYear | date}}</div>
+									</div>
+									<div class="item-description">
+										<p id="text" class="myStyle" > {{jobHistory.jobSummary}} </p>
+										<button  id="fullButton" class="show button margin-top-35  button-sliding-icon ripple-effect" (click)="fullJobSummary()">countinue reading</button>
+										<button  id="lessButton" class="hide button margin-top-35  button-sliding-icon ripple-effect" (click)="lessJobSummary()">less</button>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+					</div>
+				</div>
+				<!-- Boxed List / End -->
+			</div>
+			<!-- Sidebar -->
+			<div class="col-xl-4 col-lg-4">
+				<div class="sidebar-container">
+					<!-- Button -->
+					<a class="apply-now-button popup-with-zoom-anim margin-bottom-50" data-toggle="modal" data-target="#myModal" >Send Message <i class="far da-envelope"></i></a>
+					<!-- Modal -->
+					<div id="myModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<!-- Modal content-->
+						<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Send Message to {{userProfile.profile.firstName}}</h4>
+						</div>
+						<div class="modal-body">
+						<!-- Form -->
+	
+						<form method="post"[formGroup]="messageForm" >
+							{{messageForm.value | json}}
+							<div class="input-with-icon-left"
+									[ngClass]="{'has-error': messageForm.get('name').errors &&
+												(messageForm.get('name').touched || messageForm.get('name').dirty)}">
+									<i class="icon-material-outline-account-circle"></i>
+									<input  type="text" formControlName='name' class="input-text with-border form-control" name="name" id="emailaddress" placeholder="Full Name" >
+									<span class="help-block" *ngIf="messageForm.get('name').errors &&
+									(messageForm.get('name').touched || messageForm.get('name').dirty)">
+									<span  *ngIf="messageForm.get('name').errors.required">name is  Required</span>
+									<span  *ngIf="messageForm.get('name').errors.minlength || message.get('name').errors.maxlength">Min length is 8 & max length is 10</span>
+									</span>
+							</div>
+	
+							<div class="input-with-icon-left"
+							[ngClass]="{'has-error': messageForm.get('email').errors &&
+										(messageForm.get('email').touched || messageForm.get('email').dirty)}">
+							<i class="icon-material-outline-account-circle"></i>
+							<input  type="text" formControlName='email' class="input-text with-border form-control" name="email" id="emailaddress" placeholder="Email Address" >
+							<span class="help-block" *ngIf="messageForm.get('email').errors &&
+							(messageForm.get('email').touched || messageForm.get('email').dirty)">
+							<span  *ngIf="messageForm.get('email').errors.required">Email is Required</span>
+							<span  *ngIf="messageForm.get('email').errors.email">Email is not correct</span>
+							</span>
+					</div>
+							<div class="submit-field" [ngClass]="{'has-error': messageForm.get('message').errors &&
+							(messageForm.get('message').touched || messageForm.get('message').dirty)}">
+								<textarea cols="30" rows="5" formControlName='message' minlength="10" maxlength="255" class="with-border" ></textarea>
+								<span class="help-block" *ngIf="messageForm.get('message').errors &&
+									(messageForm.get('message').touched || messageForm.get('message').dirty)">
+									<span  *ngIf="messageForm.get('message').errors.required">message is required</span>
+									<span  *ngIf="messageForm.get('message').errors.minlength || messageForm.get('message').errors.maxlength">min length is 10 and max length is 100</span>
+								</span>
+							</div>
+	
+							<div class="uploadButton margin-top-25">
+								<div *ngIf="pdfUploadProgress">
+									<div class="progress0">
+										<div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': pdfUploadProgress , 'height': '10px' }" ></div>
+									</div>
+									</div>
+									<div class="attachments-container margin-top-0 margin-bottom-0">
+									<div class="attachment-box ripple-effect">
+										<input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" multiple formControlName='attachments' ng2FileSelect [uploader]="uploader" (onFileSelected)="OnPdfSelect($event)"   type="file"  
+										required/>
+									</div>
+								</div>
+								<label class="uploadButton-button ripple-effect" for="upload">Add Attachments</label>
+								<span class="uploadButton-file-name">Allowed file types: zip, pdf, png, jpg <br> Max. files size: 50 MB.</span>
+							</div>
+	
+							<div class="input-with-icon-left" >
+								<input type="submit"  (click)="messages(messageForm)" class="button  ripple-effect margin-top-10" value="Save">
+							  </div>
+						</form>
+							</div>
+					  </div>
+				  </div>
+				</div>
+					<!-- Freelancer Indicators -->
+					<div class="sidebar-widget">
+					</div>
+					<!-- Widget -->
+					<div class="sidebar-widget">
+						<div class="boxed-list-headline">
+						<h3>Skills</h3>
+						</div>
+						<ul class="task-tags" *ngFor="let skill of skills">
+							<li><span>{{skill.skillName}}</span></li>
+						</ul>
+					</div>
+				
+					<!-- Widget -->
+					<div class="sidebar-widget" *ngIf="!editCv">
+						<h3>Attachments</h3>
+						<div class="attachments-container">
+							<a  class="attachment-box ripple-effect" (click)="downloadPdf()">Download Cv</a>	
+						</div>
+					</div>
+					<div class="col-xl-12" *ngIf="editCv">
+						<div class="dashboard-box">
+							<!-- Headline -->
+							<div class="headline">
+								<h3><i class="icon-material-outline-account-circle"></i>CV</h3>
+							</div>
+						</div>
+					</div>
+	
+	
+					<!-- Sidebar Widget -->
+					<div class="sidebar-widget">
+						<h3>Bookmark or Share</h3>
+	
+						<!-- Bookmark Button -->
+					
+						<button (click) = "bookmark()" class="bookmark-button margin-bottom-25">
+							<span class="bookmark-icon"></span>
+							<span *ngIf = '!bookmarked' class="bookmark-text">Bookmark</span>
+							<span *ngIf = 'bookmarked' class="bookmark-text">Bookmarked</span>
+						</button>
+						
+	
+						<!-- Copy URL -->
+						<div class="copy-url">
+							<input id="copy-url" type="text" value="" class="with-border">
+							<button class="copy-url-button ripple-effect" data-clipboard-target="#copy-url" title="Copy to Clipboard" data-tippy-placement="top"><i class="icon-material-outline-file-copy"></i></button>
+						</div>
+	
+						<!-- Share Buttons -->
+						<div class="share-buttons margin-top-25">
+							<div class="share-buttons-trigger"><i class="icon-feather-share-2"></i></div>
+							<div class="share-buttons-content">
+								<span>Interesting? <strong>Share It!</strong></span>
+								<ul class="share-buttons-icons">
+									<li><a href="#" data-button-color="#3b5998" title="Share on Facebook" data-tippy-placement="top"><i class="icon-brand-facebook-f"></i></a></li>
+									<li><a href="#" data-button-color="#1da1f2" title="Share on Twitter" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>
+									<li><a href="#" data-button-color="#dd4b39" title="Share on Google Plus" data-tippy-placement="top"><i class="icon-brand-google-plus-g"></i></a></li>
+									<li><a href="#" data-button-color="#0077b5" title="Share on LinkedIn" data-tippy-placement="top"><i class="icon-brand-linkedin-in"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+	
+				</div>
+			</div>
+	
+		</div>
+	</div>
+	
+	
+	<!-- Spacer -->
+	<div class="margin-top-15"></div>
+	<!-- Spacer / End-->
+	
+	<!-- Footer
+	================================================== -->
+	
+	<!-- Footer / End -->
+	
+	</div>
+	<!-- Wrapper / End -->
+	
+	
+	<!-- Make an Offer Popup
+	================================================== -->
+	<div id="tab" class="zoom-anim-dialog mfp-hide dialog-with-tabs">
+	
+		<!--Tabs -->
+	
+		<div class="sign-in-form">
+	
+			<ul class="popup-tabs-nav">
+				<li><a href="#tab">Send Message</a></li>
+			</ul>
+	
+			<div class="popup-tabs-container">
+	
+				<!-- Tab -->
+				<div class="popup-tab-content" id="tab">
+					
+					<!-- Welcome Text -->
+					<div class="welcome-text">
+						<h3>Discuss your project with David</h3>
+					</div>
+						
+					<!-- Form -->
+					<form method="post">
+	
+						<div class="input-with-icon-left">
+							<i class="icon-material-outline-account-circle"></i>
+							<input type="text" class="input-text with-border" name="name" id="name" placeholder="First and Last Name"/>
+						</div>
+	
+						<div class="input-with-icon-left">
+							<i class="icon-material-baseline-mail-outline"></i>
+							<input type="text" class="input-text with-border" name="emailaddress" id="emailaddress" placeholder="Email Address"/>
+						</div>
+	
+						<textarea name="textarea" cols="10" placeholder="Message" class="with-border"></textarea>
+	
+						<div class="uploadButton margin-top-25">
+							<input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" multiple/>
+							<label class="uploadButton-button ripple-effect" for="upload">Add Attachments</label>
+							<span class="uploadButton-file-name">Allowed file types: zip, pdf, png, jpg <br> Max. files size: 50 MB.</span>
+						</div>
+	
+					</form>
+					
+					<!-- Button -->
+					<button class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit">Make an Offer <i class="icon-material-outline-arrow-right-alt"></i></button>
+	
+				</div>
+				<!-- Login -->
+				<div class="popup-tab-content" id="loginn">
+					
+					<!-- Welcome Text -->
+					<div class="welcome-text">
+						<h3>Discuss Your Project With Tom</h3>
+					</div>
+						
+					<!-- Form -->
+					<form method="post" id="make-an-offer-form">
+						<div class="input-with-icon-left">
+							<i class="icon-material-outline-account-circle"></i>
+							<input type="text" class="input-text with-border" name="name2" id="name2" placeholder="First and Last Name" required/>
+						</div>
+	
+						<div class="input-with-icon-left">
+							<i class="icon-material-baseline-mail-outline"></i>
+							<input type="text" class="input-text with-border" name="emailaddress2" id="emailaddress2" placeholder="Email Address" required/>
+						</div>
+	
+						<textarea name="textarea" cols="10" placeholder="Message" class="with-border"></textarea>
+	
+						<div class="uploadButton margin-top-25">
+							<input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload-cv" multiple/>
+							<label class="uploadButton-button" for="upload-cv">Add Attachments</label>
+							<span class="uploadButton-file-name">Allowed file types: zip, pdf, png, jpg <br> Max. files size: 50 MB.</span>
+						</div>
+					</form>		
+					<!-- Button -->
+					<button class="button full-width button-sliding-icon ripple-effect" type="submit" form="make-an-offer-form">Make an Offer <i class="icon-material-outline-arrow-right-alt"></i></button>
+				</div>
+				<div class="modal-content">
+					<ng-template #content let-c="close" let-d="dismiss" class="modal-content">
+					
+					  <div class="modal-header">
+						<h4 class="modal-title">Write a Review</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+						  <span aria-hidden="true">&times;</span>
+						</button>
+					  </div>
+					  <div class="modal-body">
+						<form>
+							 <textarea rows="5"
+									class="form-control"
+									placeholder="Write about your experience in this place"
+									id="text"
+									name="text"
+									[(ngModel)]="review.text"
+									>
+							</textarea>  
+						</form>
+					  </div>
+					</ng-template>
+				 </div>
+			</div>
+		</div>
+	</div>
+	<!-- Make an Offer Popup / End -->
+	
+	
+	
+	
+	

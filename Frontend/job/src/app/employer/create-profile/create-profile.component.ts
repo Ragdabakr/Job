@@ -192,7 +192,7 @@ validateAllFormFields(formGroup: FormGroup) {
   });
   }
 
-  // skills Array
+  // social Array
 
   addSocialsButtonClick(): void {
   const socials = this.socialForm.controls.socials as FormArray;

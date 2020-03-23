@@ -34,6 +34,25 @@ public createSocial( socialForm: any): Observable<any> {
  public createCompanyBookmark(companyId): Observable<any> {
   return this.http.post('/api/v1/employer/create-bookmark-company' , {companyId});
  }
-
+ public deleteJob(jobId): Observable<any> {
+  return this.http.post('/api/v1/employer/delete-job' , {jobId});
+ }
+ public deleteApplayUser(applayUser , jobId): Observable<any> {
+  return this.http.post('/api/v1/employer/delete-applayUser' , {applayUser , jobId});
+ }
+ public editAccountForm(userId , cvForm , text ): Observable<any> {
+  return this.http.post('/api/v1/employer/edit-account-form' , {userId , cvForm , text });
+ }
+ public editSingleSocial(userId , socialId , socialForm ): Observable<any> {
+  return this.http.post('/api/v1/employer/edit-social-form' , {userId , socialId , socialForm });
+ }
+ public deleteSocial(userId , socialId): Observable<any> {
+  return this.http.post(`/api/v1/employer/delete-social` , {userId , socialId});
+}
+public deleteBookmarkEmployee(userId , employeeId): Observable<any> {
+  // tslint:disable-next-line: no-debugger
+  debugger;
+ return this.http.post(`/api/v1/employer/delete-userBookmark` , {userId , employeeId});
+}
 }
 

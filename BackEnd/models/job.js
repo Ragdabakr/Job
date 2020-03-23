@@ -48,6 +48,7 @@ const jobSchema = new Schema({
   createdAt :{
       type:Date,default:Date.now
   },
+  expDate : {type:Date},
   jobApplicants:[{
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
     email:{type:String,required:true,},

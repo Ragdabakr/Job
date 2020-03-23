@@ -1,0 +1,53 @@
+.file-text{
+    color:white;
+}
+.dashboard-box .button.ico {
+    color: rgb(180, 19, 19);
+}
+.title{
+    text-transform: capitalize;
+}
+.myStyle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+ }
+ .hide{
+     display: none;
+ }
+ .show{
+     display:block;
+ }
+ .right{
+     float:right;
+ }
+ .input-with-icon-left {
+    position: unset;
+}
+.cancel{
+    background-color: #dc0606;
+    padding: 10px;
+    margin-left: 5px;
+}
+.button{
+    padding: 10px;
+    margin-left: 1%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
+.btn-danger{
+    margin-left:5px;
+}
+.left-side{
+    position:relative;
+}
+.attachment-box{
+    flex:none;
+}
+.content{
+    margin-top: 40px;
+}
+
+

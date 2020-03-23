@@ -11,6 +11,7 @@ import { NgxPaginationModule} from 'ngx-pagination';
 import { JobListComponent} from './job-list/job-list.component';
 import { JobSearchResultComponent } from './job-search-result/job-search-result.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
+import { JobService } from './job.service';
 
 @NgModule({
   declarations:  [
@@ -32,6 +33,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
     BrowserAnimationsModule,
     NgxPaginationModule,
     
-  ]
+  ],
+  providers: [JobService]
 })
 export class JobsModule { }

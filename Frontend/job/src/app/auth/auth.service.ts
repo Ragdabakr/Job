@@ -23,14 +23,13 @@ export class AuthService {
   }
 
   private decodeToken(token) {
-    
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64));
   }
 
   // save decoded token to localstorge to can use user in our app
-  private saveToken(token: string): string {
+    public saveToken(token: string): string {
     this.decodedToken = this.decodeToken(token);
     localStorage.setItem('app_auth', token);
     localStorage.setItem('app_meta', JSON.stringify(this.decodedToken));

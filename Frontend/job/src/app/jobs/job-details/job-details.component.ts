@@ -47,6 +47,7 @@ export class JobDetailsComponent implements OnInit {
   jobOwner: any;
   companyProfile: any;
   comapny: any;
+  pageUrl: string;
 
   constructor(private jobService: JobService ,
               private router: Router ,
@@ -59,6 +60,7 @@ export class JobDetailsComponent implements OnInit {
               ) { }
 
   ngOnInit() {
+    this.pageUrl = location.href;
     this.getCountries();
     this.jobId = this.route.snapshot.paramMap.get('id');
     this.jobService.getJob(this.jobId).subscribe((data) => {
@@ -67,28 +69,16 @@ export class JobDetailsComponent implements OnInit {
       this.auth.getUserById(this.jobOwner).subscribe((company) => {
         this.comapny = company;
         this.companyProfile = company.profile;
-        console.log('mmm', this.companyProfile);
-        console.log('mmkkkkm', this.jobOwner);
       });
       this.FindSimilarJobs(this.job.title , this.jobId);
       this.jobApplicants = data.jobApplicants;
-      const jobApplicants = this.jobApplicants.filter(item => {
-        for (let key in filter) {
-          if (item[key] === undefined || item[key] !== filter[key]) {
-            return false;
-          }
-        }
-        return true;
-      });
-      const applicantsaId = jobApplicants
-    .map(item => ({ 
-        userId: item.userId, 
-    }));
-      const ar = [];
-      const Id = applicantsaId.map(({ userId }) => this.userId);
-      if (this.userId in Id){
+      const Id = this.jobApplicants.filter(x => x.user.id);
+      console.log('idss', Id);
+      console.log('idss', this.jobApplicants);
+      if (this.userId in Id) {
         this.canApplay = false;
       }
+      this.canApplay = true;
      } , (errorResponse: HttpErrorResponse) => {
         this.errors = errorResponse.error.errors;
     });
@@ -99,6 +89,8 @@ export class JobDetailsComponent implements OnInit {
     if (this.userId) {
     this.auth.getUserById(this.userId).subscribe((user) => {
     this.user = user;
+    console.log('userrrr', user.profile.pdf.pdfId);
+    console.log('sds', user.profile.pdf.pdfVersion);
      });
     } else {
      this.user = '';
@@ -116,6 +108,15 @@ export class JobDetailsComponent implements OnInit {
       return moment(time).fromNow();
     }
     userApplayForJob() {
+      if (!this.user.profile.pdf.pdfId || !this.user.profile.pdf.pdfVersion) {
+        window.scroll(0, 0); // scroll to top of page;
+        this.successAlert = 'You must add your cv to can appaly for this job';
+        this.errors = true;
+        setTimeout(() => {
+        this.success = false;
+        window.location.href = '/dashboard/employee/create-profile';
+       }, 8000);
+      } else {
       this.jobService.userApplayForJob(this.jobId, this.user).subscribe((data) => {
     });
       window.scroll(0, 0); // scroll to top of page;
@@ -125,6 +126,7 @@ export class JobDetailsComponent implements OnInit {
       this.success = false;
       window.location.href = '/job-list';
      }, 10000);
+    }
   }
 
   // if anounce applay for job 
@@ -203,7 +205,7 @@ getJob(smilarJob) {
   this.id = smilarJob._id;
   setTimeout(() => {
     this.success = false;
-    window.location.href = `/job-detail/${this.id}`;
+    window.location.href = `/job/job-detail/${this.id}`;
    }, 1000);
  }
  getCompany() {

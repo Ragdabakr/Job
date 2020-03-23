@@ -52,7 +52,7 @@ public sendMessagePdf(pdf: string): Observable<any> {
  public createMessage(messageForm: any , pdf: any ,reciever : any): Observable<any> {
   return this.http.post('/api/v1/employee/create-messageForm' , {messageForm , pdf ,reciever});
  }
- 
+
  public createUserBookmark(userId: any ): Observable<any> {
   return this.http.post('/api/v1/employee/create-bookmark-users' , {userId});
  }
@@ -76,11 +76,11 @@ public deleteSkill(userId , skillId): Observable<any> {
   return this.http.post(`/api/v1/employee/delete-skill` , {userId , skillId});
 }
 public deleteJob(userId , idJobHistory): Observable<any> {
-  // tslint:disable-next-line: no-debugger
-  debugger;
   return this.http.post(`/api/v1/employee/delete-job` , {userId , idJobHistory});
 }
-
+public deleteApplayJob(jobId): Observable<any> {
+ return this.http.post('/api/v1/employee/delete-applay-job' , {jobId});
+}
 
 }
 

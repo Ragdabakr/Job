@@ -6,7 +6,7 @@ const { normalizeErrors } = require('../helpers/mongoose');
 const jwt = require('jsonwebtoken');
 const config = require('../config/db');
 var nodemailer = require('nodemailer');
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcryptjs');
 var async = require('async');
 var crypto = require('crypto');
 const SMTP = require('nodemailer-smtp-transport');
@@ -131,34 +131,53 @@ router.post("/confirmation" , (req,res) =>{
 // ---------------- Find auth route ---------------- 
 router.post('/login',function(req,res) {
   const { email, password } = req.body;
-  User.findOne({email},function(error,user) {
+  User.findOne({email},async function(error,user) {
     if(error) {
       return res.json({"error" : true,"message" : error});
     }
     if(!user) {
       return res.json({"error" : true,"message" : "User not found"});
     }
-    if(user.password !== req.body.password) {
-      return res.json({"error" : true,"message" : "Password mismatch"});
-    }else{
+    var token = jwt.sign({
+          userId: user.id,
+          email: user.email
+        }, config.SECRET, { expiresIn: '1h'});
+        console.log(token);
+        console.log('ooo');
+           return res.json(token);
 
-      const token = jwt.sign({
-        userId: user.id,
-        email: user.email
-      }, config.SECRET, { expiresIn: '1h'});
-      return res.json(token);
-    }
+    // await bcrypt.compare(req.body.password , user.password, function(err, matches) {
+    //   console.log('hhh',matches);
+    //   if (err){console.log('sdcdsc');}
+    //   else if (matches){
+    //     var token = jwt.sign({
+    //     userId: user.id,
+    //     email: user.email
+    //   }, config.SECRET, { expiresIn: '1h'});
+    //   console.log(token);
+    //   console.log('ooo');
+    //      return res.json(token);
+    //   } else{
+    //     console.log('dsc');
+    //     return res.json({"error" : true,"message" : "The password does NOT match!"});
+    //   }
+    // });
   });
 });
 
 
 // ---------------- Get user by id---------------- 
 
-router.get("/user/:id" , (req,res) =>{
-   User.findById({_id:req.params.id},function(err, user) {
-    //  console.log(user);
+router.get("/user/:id" , (req, res) =>{
+   User.findById({_id:req.params.id})
+   .populate('postedJobs')
+   .populate('applayforJobs')
+   .populate('socials')
+   .populate('bookmarkUsers')
+   .populate('bookmarkCompanies')
+   .exec(function(err, user) {
      if(err){
-       console.log(err);
+      return res.json({"error" : true,"message" : "No user Found"});
      }
      res.json(user);
    });

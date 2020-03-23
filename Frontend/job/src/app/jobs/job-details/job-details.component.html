@@ -96,8 +96,8 @@
 		<div class="col-xl-4 col-lg-4">
 			<div class="sidebar-container">
 				<!-- Trigger the modal with a button -->
-				<button *ngIf="user.role === 'employee' && !cantApplay"  class="apply-now-button popup-with-zoom-anim"><h3 class="error">You have already applied for this job</h3></button>
-				<button *ngIf="user.role === 'employee' && cantApplay"   (click)="userApplayForJob()"  class="button ripple-effect">Applay for job user<i class="icon-material-outline-arrow-right-alt"></i></button>
+				<button *ngIf="user.role === 'employee' "  class="apply-now-button popup-with-zoom-anim"><h3 class="error">You have already applied for this job</h3></button>
+				<button *ngIf="user.role === 'employee'"   (click)="userApplayForJob()"  class="button ripple-effect">Applay for job user<i class="icon-material-outline-arrow-right-alt"></i></button>
 				<button *ngIf="!user"  data-toggle="modal" data-target="#myModal"   class="button ripple-effect">Applay for job not user<i class="icon-material-outline-arrow-right-alt"></i></button>	
 
 				<!-- Modal -->
@@ -204,30 +204,62 @@
 							<ul>
 								<li>
 									<i class="icon-material-outline-location-on"></i>
-									<span><i class="fa fa-map-marker"></i> Location</span>
+									<span><i class="far fa-compass"></i> Location</span>
 									<h5>{{job.location}}</h5>
 								</li>
 								<li>
 									<i class="icon-material-outline-access-time"></i>
-									<span><i class="fa fa-envelope"></i> Email</span>
+									<span><i class="icon far fa-envelope"></i> Email</span>
 									<h5>{{job.email}}</h5>
 								</li>
 								<li>
 									<i class="icon-material-outline-business-center"></i>
-									<span><i class="fa fa-briefcase"></i> Job Type</span>
+									<span><i class="icon fa fa-briefcase"></i> Job Type</span>
 									<h5>{{job.type}}</h5>
 								</li>
 								<li *ngIf="job.max && job.min">
 									<i class="icon-material-outline-local-atm"></i>
-									<span><i class="fa fa-credit-card"></i> Salary</span>
+									<span><i class="far fa-money-bill-alt"></i> Salary</span>
 									<h5>{{job.min}} - {{job.max}}</h5>
 								</li>
 								<li>
 									<i class="icon-material-outline-access-time"></i>
-									<span><i class="fa fa-clock"></i> Date Posted</span>
+									<span><i class="far fa-calendar-check"></i> Date Posted</span>
 									<h5>{{TimeFromNow(job.createdAt)}}</h5>
 								</li>
+								<li>
+									<i class="icon-material-outline-access-time"></i>
+									<span><i class="far fa-calendar-times"></i> Expired Date</span>
+									<h5>{{job.expDate | date}}</h5>
+								</li>
 							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- Sidebar Widget -->
+				<div class="sidebar-widget">
+					<h3>Bookmark or Share</h3>
+
+					<!-- Bookmark Button -->
+					<button (click) = "bookmarkCompany()" >
+						<span class="bookmark-icon"></span>
+						<span *ngIf = '!bookmark' class="bookmark-text"><i class="far fa-bookmark"></i> Bookmark</span>
+						<span *ngIf = 'bookmark' class="bookmarked-text"><i class="fas fa-bookmark"></i> Bookmarked</span>
+					</button>
+
+
+					<!-- Copy URL -->
+					<div class="copy-url">
+						<input id="copy-url" type="text" value="{{pageUrl}}" class="with-border">
+						<button class="copy-url-button ripple-effect" data-clipboard-target="[pageUrl]" title="Copy to Clipboard" data-tippy-placement="top"><i class="fas fa-search"></i></button>
+					</div>
+
+					<!-- Share Buttons -->
+					<div class="share-buttons margin-top-25">
+						<div class="">
+							<span class="share-buttons-trigger"><i class=" icon far fa-share-square"></i></span>
+							<span>Interesting? <strong>Share It!</strong></span>
+							<div class="fb-share-button" data-href="http://localhost:4200/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4200%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 						</div>
 					</div>
 				</div>

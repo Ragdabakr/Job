@@ -4,9 +4,16 @@
 
 	<!-- Dashboard Container -->
 	<div class="dashboard-container">
-		<!-- <app-sidebar></app-sidebar> -->
-		<!-- Dashboard Content
-        ================================================== -->
+	<!-- Dashboard Sidebar
+	================================================== -->
+	<div class="dashboard-sidebar">
+		<div class="dashboard-sidebar-inner" data-simplebar>
+			<app-sidebar></app-sidebar>
+		</div>
+	</div>
+	<!-- Dashboard Sidebar / End -->
+	 <!-- Dashboard Content
+    ================================================== -->
  
 		<div class="dashboard-content-container" data-simplebar>
 			<div class="dashboard-content-inner" >
@@ -64,7 +71,7 @@
 						</div>
                     </div>
 					<!-- Dashboard Box -->
-					<div class="col-xl-4">
+					<div class="col-xl-12">
 						<div class="dashboard-box margin-top-0">
 							<!-- Headline -->
 							<div class="headline">
@@ -73,7 +80,7 @@
                             <form [formGroup]="cvForm">
                                 <div class="content with-padding padding-bottom-0">
                                     <div class="row">
-                                        <div class="col-xl-4">
+                                        <div class="col-xl-12">
                                                 <div class="col-md-4">
                                                     <div class="submit-field form-group" 
                                                      [ngClass]="{'has-error': cvForm.get('firstName').errors &&
@@ -92,7 +99,7 @@
                                                     <div class="submit-field">
                                                 <!-- Phone Number -->
                                                 <h5 class="control-label">Phone number</h5>
-                                                 <div class="input-group phoneBox " >
+                                                 <div class="input-group phoneBox">
                                                             <span class="dropDown">
                                                                 <ng-select 
                                                                 maxLength="30"
