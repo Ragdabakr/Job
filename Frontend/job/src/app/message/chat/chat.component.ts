@@ -1,0 +1,77 @@
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
+import { MessageService } from '../message.service';
+import io from 'socket.io-client';
+@Component({
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.scss']
+})
+export class ChatComponent implements OnInit {
+  userId: any;
+  userChatList = [];
+  conversationList = [];
+  recieverId: any;
+  senderName: any;
+  recieverName: any;
+  chat = [];
+  List: any;
+  socket: any;
+  message: any;
+  body: any;
+  typingMessage;
+  typing: boolean = false;
+
+  constructor(private auth: AuthService ,
+              private messageService: MessageService) {this.socket = io('http://localhost:3000')}
+
+  ngOnInit() {
+    this.getUser();
+    this.socket.on('refreshPage', () => {
+      this.getChatList(this.recieverId , this.recieverName);
+    });
+    this.socket.on('is_typing', data => {
+      console.log(data.sender);
+      console.log(this.recieverName);
+      if (data.sender === this.recieverName) {
+         this.typing = true;
+      }
+    });
+}
+
+  getUser() {
+    this.userId = this.auth.getUserId();
+    this.auth.getUserById(this.userId).subscribe((data) => {
+    this.conversationList  = data.chatList;
+    this.senderName = data.profile.firstName;
+    });
+  }
+  getChatList(recieverId , recieverName) {
+    this.joinChat();
+    this.recieverId = recieverId;
+    this.recieverName = recieverName;
+    this.messageService.getAllMessages(this.userId, this.recieverId).subscribe((data) => {
+    this.chat = data.messages;
+    
+     });
+  }
+  joinChat() {
+    const params = {
+      room1: this.senderName ,
+      room2: this.recieverName
+    };
+    this.socket.emit('join chat', params);
+  }
+  sendMessage(body) {
+    this.messageService.sendMessage( body.value, this.userId , this.recieverId, this.senderName , this.recieverName).subscribe((data) =>{
+    });
+    this.socket.emit('refresh', {});
+    body.value = '';
+    }
+    isTyping() {
+      this.socket.emit('start_typing', {
+        sender: this.senderName,
+        reciever : this.recieverName
+      });
+    }
+}

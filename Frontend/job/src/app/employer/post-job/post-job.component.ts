@@ -13,7 +13,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
 })
 export class PostJobComponent implements OnInit {
   // This line for deactivate link
-  @ViewChild('postJobForm', {static: false}) public jobForm: FormGroup;
+  @ViewChild('postJobForm') public jobForm: FormGroup;
   postJobForm: FormGroup;
   types = [
     {name: 'Full Time', id: 'AZ'},

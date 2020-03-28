@@ -211,23 +211,23 @@ ReadAsBase64(file): Promise <any> {
   return fileValue;
 }
 
-messages(messageForm) {
-  this.employeeService.createMessage(messageForm.value , this.selectedPdf , this.userId)
-  .subscribe(messgaeData => {
-    this.router.navigate(['/view-profile']);
-  });
-  this.pdfUploadProgress = '0%';
-  this.employeeService.sendMessagePdf(this.selectedPdf)
-  .subscribe(events => {
-    if (events.type === HttpEventType.UploadProgress) {
-      this.pdfUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
-      console.log(this.pdfUploadProgress);
-    } else if (events.type === HttpEventType.Response) {
-      this.pdfUploadProgress = '';
-      alert('SUCCESS !!');
-    }
-  });
-}
+// messages(messageForm) {
+//   this.employeeService.createMessage(messageForm.value , this.selectedPdf , this.userId)
+//   .subscribe(messgaeData => {
+//     this.router.navigate(['/view-profile']);
+//   });
+//   this.pdfUploadProgress = '0%';
+//   this.employeeService.sendMessagePdf(this.selectedPdf)
+//   .subscribe(events => {
+//     if (events.type === HttpEventType.UploadProgress) {
+//       this.pdfUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+//       console.log(this.pdfUploadProgress);
+//     } else if (events.type === HttpEventType.Response) {
+//       this.pdfUploadProgress = '';
+//       alert('SUCCESS !!');
+//     }
+//   });
+// }
 
 OnPdfSelect(event) {
   console.log(event);

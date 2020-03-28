@@ -35,6 +35,7 @@ import { ViewUserProfileComponent } from './employee/view-user-profile/view-user
 import { ManageProfileComponent } from './employer/manage-profile/manage-profile.component';
 import { EditProfileComponent } from './employer/edit-profile/edit-profile.component';
 import { ManageBookmarksComponent } from './employer/manage-bookmarks/manage-bookmarks.component';
+import { ChatComponent } from './message/chat/chat.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent },
@@ -79,7 +80,13 @@ const routes: Routes = [
     {path: ':locationSearch/:keywordSearch/homes', component: JobSearchResultComponent },
   ]
 },
+{ path: 'dashboard',
+  children: [
+    { path: 'message', component: ChatComponent, canActivate: [AuthGuard] },
+  ]
+},
 {path: '404', component: PageNotFoundComponent },
+
 
   // {path: '' , redirectTo: '/login' , pathMatch: 'full'},
 ];

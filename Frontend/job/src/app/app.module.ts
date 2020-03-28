@@ -19,6 +19,7 @@ import { JobsModule } from './jobs/jobs.module';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from './common/common.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MessageModule } from './message/message.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     RouterModule,
     AppRoutingModule,
     AuthModule,
+    MessageModule,
     JobsModule,
     EmployeeModule,
     EmployerModule,
@@ -42,7 +44,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     FileUploadModule,
     NgxPaginationModule,
     CKEditorModule,
-    
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 

@@ -49,16 +49,12 @@ public sendMessagePdf(pdf: string): Observable<any> {
     observe: 'events'
   });
  }
- public createMessage(messageForm: any , pdf: any ,reciever : any): Observable<any> {
-  return this.http.post('/api/v1/employee/create-messageForm' , {messageForm , pdf ,reciever});
- }
 
  public createUserBookmark(userId: any ): Observable<any> {
   return this.http.post('/api/v1/employee/create-bookmark-users' , {userId});
  }
-
  public editCvForm(userId: any , cvForm ): Observable<any> {
-   return this.http.post(`/api/v1/employee/edit-CvForm` , {userId ,cvForm});
+   return this.http.post(`/api/v1/employee/edit-CvForm` , {userId , cvForm});
  }
  public editAboutForm(userId: any , aboutForm ): Observable<any> {
   return this.http.post(`/api/v1/employee/edit-aboutForm` , {userId , aboutForm});
@@ -81,6 +77,12 @@ public deleteJob(userId , idJobHistory): Observable<any> {
 public deleteApplayJob(jobId): Observable<any> {
  return this.http.post('/api/v1/employee/delete-applay-job' , {jobId});
 }
+public createMessage(messageForm: any , pdf: any ,senderId , reciverId , senderName, reciverName ): Observable<any> {
+  // tslint:disable-next-line: no-debugger
+  debugger;
+  return this.http.post('/api/v1/message/send-message' , {messageForm , pdf , senderId , reciverId , senderName , reciverName});
+ }
+
 
 }
 

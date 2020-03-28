@@ -102,29 +102,7 @@
 	
 						<form method="post"[formGroup]="messageForm" >
 							{{messageForm.value | json}}
-							<div class="input-with-icon-left"
-									[ngClass]="{'has-error': messageForm.get('name').errors &&
-												(messageForm.get('name').touched || messageForm.get('name').dirty)}">
-									<i class="icon-material-outline-account-circle"></i>
-									<input  type="text" formControlName='name' class="input-text with-border form-control" name="name" id="emailaddress" placeholder="Full Name" >
-									<span class="help-block" *ngIf="messageForm.get('name').errors &&
-									(messageForm.get('name').touched || messageForm.get('name').dirty)">
-									<span  *ngIf="messageForm.get('name').errors.required">name is  Required</span>
-									<span  *ngIf="messageForm.get('name').errors.minlength || message.get('name').errors.maxlength">Min length is 8 & max length is 10</span>
-									</span>
-							</div>
-	
-							<div class="input-with-icon-left"
-							[ngClass]="{'has-error': messageForm.get('email').errors &&
-										(messageForm.get('email').touched || messageForm.get('email').dirty)}">
-							<i class="icon-material-outline-account-circle"></i>
-							<input  type="text" formControlName='email' class="input-text with-border form-control" name="email" id="emailaddress" placeholder="Email Address" >
-							<span class="help-block" *ngIf="messageForm.get('email').errors &&
-							(messageForm.get('email').touched || messageForm.get('email').dirty)">
-							<span  *ngIf="messageForm.get('email').errors.required">Email is Required</span>
-							<span  *ngIf="messageForm.get('email').errors.email">Email is not correct</span>
-							</span>
-					</div>
+							<h5>Message</h5>
 							<div class="submit-field" [ngClass]="{'has-error': messageForm.get('message').errors &&
 							(messageForm.get('message').touched || messageForm.get('message').dirty)}">
 								<textarea cols="30" rows="5" formControlName='message' minlength="10" maxlength="255" class="with-border" ></textarea>

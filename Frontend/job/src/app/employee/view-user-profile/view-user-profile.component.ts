@@ -78,6 +78,10 @@ export class ViewUserProfileComponent implements OnInit {
   progress: boolean;
   editCv: boolean;
   pdfForm: FormGroup;
+  senderId: any;
+  reciverId: any;
+  reciverName: any;
+  senderName: any;
   constructor(
     private modalService: NgbModal,
     private employeeService: EmployeeService ,
@@ -90,12 +94,11 @@ export class ViewUserProfileComponent implements OnInit {
 
   ngOnInit() {
   this.getUserProfile();
+  this.getSenderProfile();
   this.getCountries();
   this.messageForm = this.fb.group ({
-    name : ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
-    email: ['', [Validators.required , Validators.email]],
     message: ['', Validators.required],
-    attachments: ['',]
+    attachments: ['']
   });
 
   this.cvForm = this.fb.group ({
@@ -110,8 +113,6 @@ export class ViewUserProfileComponent implements OnInit {
 
   }
 
- 
-
    // Get all countries
    getCountries() {
     this.employeeService.getCountries().subscribe((countries) => {
@@ -119,15 +120,20 @@ export class ViewUserProfileComponent implements OnInit {
      });
    }
 
+  getSenderProfile() {
+    this.senderId = this.auth.getUserId();
+    this.auth.getUserById(this.senderId).subscribe((user) => {
+     this.senderName = user.profile.firstName;
+    });
+  }
   getUserProfile() {
       this.userId = this.route.snapshot.paramMap.get('id');
-      console.log(this.userId);
+      this.reciverId = this.userId;
       this.auth.getUserById(this.userId).subscribe((user) => {
       this.userProfile = user;
       this.user = user;
-      console.log(this.userProfile);
+      this.reciverName = this.user.profile.firstName;
       this.jobHistories = user.profile.jobHistories;
-      console.log(this.jobHistories);
       this.bookmarks = user.bookmarkUsers;
       this.skills = user.profile.skills;
 
@@ -194,9 +200,15 @@ ReadAsBase64(file): Promise <any> {
 }
 
 messages(messageForm) {
-  this.employeeService.createMessage(messageForm.value , this.selectedPdf , this.userId)
+  this.employeeService.createMessage(
+    messageForm.value ,
+    this.selectedPdf ,
+    this.senderId ,
+    this.reciverId ,
+    this.senderName ,
+    this.reciverName )
   .subscribe(messgaeData => {
-    this.router.navigate(['/view-profile']);
+    window.location.reload();
   });
   this.pdfUploadProgress = '0%';
   this.employeeService.sendMessagePdf(this.selectedPdf)
@@ -224,7 +236,6 @@ OnPdfSelect(event) {
 } else {
    this.ReadAsBase64(pdfFile).then(result => {
      this.selectedPdf = result;
-    //  console.log('selectedPdf',this.selectedPdf);
    }).catch (err => console.log(err));
  }
  }

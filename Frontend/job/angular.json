@@ -130,6 +130,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "job"
+    }
+  },
+  "defaultProject": "job",
+  "cli": {
+    "analytics": false
+  }
 }
