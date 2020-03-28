@@ -73,16 +73,7 @@ const userSchema = new Schema({
 
 
 },
-  message:[{
-  senderName : {type:String},
-  senderEmail : {type:String},
-  message:{type:String},
-  attachmentId : {type:String },
-  attachmentVersion : {type:String },
-  senderId : { type: Schema.Types.ObjectId, ref: 'User' },
-  recieverId : { type: Schema.Types.ObjectId, ref: 'User' },
-  isRead :{type:Boolean ,default:false},
-}],
+
 bookmarkUsers :[{
  type: Schema.Types.ObjectId, ref: 'User' 
 }],
@@ -95,6 +86,18 @@ postedJobs:[{
 applayforJobs:[{
   type: Schema.Types.ObjectId, ref: 'Job' 
  }],
+ chatList:[{
+  reciever: { type: Schema.Types.ObjectId, ref: 'User' },
+  recieverName:{type:String},
+  message:{type:String},
+  msg: { type: Schema.Types.ObjectId, ref: 'Message' },
+  read :{type:Boolean,default :false},
+ }],
+
+ conversationList:[{
+    type: Schema.Types.ObjectId, ref: 'Message' 
+ }],
+
 
 });
 

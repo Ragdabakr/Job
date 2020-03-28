@@ -175,6 +175,8 @@ router.get("/user/:id" , (req, res) =>{
    .populate('socials')
    .populate('bookmarkUsers')
    .populate('bookmarkCompanies')
+   .populate('chatList.msg')
+   .populate('conversationList')
    .exec(function(err, user) {
      if(err){
       return res.json({"error" : true,"message" : "No user Found"});

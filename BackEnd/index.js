@@ -12,6 +12,7 @@ const bcrypt = require('bcrypt-nodejs');
 const async = require('async');
 const crypto = require('crypto');
 const pdf = require('express-pdf');
+const _ = require('lodash');
 
 
 
@@ -33,7 +34,15 @@ app.use(cookieParser());
 app.use(cors());
 app.use(pdf);
 
+//socket 
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
+const {User} = require('./helpers/UserClass');
+
+//call streams file
+require('./socket/streams')(io);
+require('./socket/private')(io);
 
 
 // mongoose connect
@@ -50,8 +59,9 @@ app.use('/api/v1/image', require('./routes/image'));
 app.use('/api/v1/employee', require('./routes/employee'));
 app.use('/api/v1/employer', require('./routes/employer'));
 app.use('/api/v1/jobs', require('./routes/jobs'));
+app.use('/api/v1/message', require('./routes/message'));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT,function(){
+http.listen(PORT,function(){
 	console.log("running 3000");
 });

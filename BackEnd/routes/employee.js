@@ -92,30 +92,28 @@ router.post('/create-jobHistoriesForm', authMiddleware ,function(req,res){
 
 // ---------------- Find create-messageForm route---------------- 
 
-router.post('/create-messageForm', authMiddleware ,function(req,res){
-    const user = res.locals.user;
-    // console.log("pdfss" ,req.body.messageForm);
-    cloudinary.uploader.upload(req.body.pdf,async (result) => {
-    User.findOne({email:user.email}, async function(err,foundUser){
-        if (err) {
-            console.log(err);
-            return res.status(422).send({errors: normalizeErrors(err.errors)});
-          }
-          //push array in to array
-          await foundUser.message.push({
-                senderName:req.body.messageForm.name,
-                senderEmail:req.body.messageForm.email,
-                message : req.body.messageForm.message,
-                senderId : user.id,
-                recieverId : req.body.reciever,
-                attachmentId : result.public_id,
-                attachmentVersion : result.version,
-          });
-         foundUser.save();
-         return  res.json(foundUser);
-       });
-    });
-});
+// router.post('/create-messageForm', authMiddleware ,function(req,res){
+//     const user = res.locals.user;
+//     cloudinary.uploader.upload(req.body.pdf,async (result) => {
+//     User.findOne({email:user.email}, async function(err,foundUser){
+//         if (err) {
+//             console.log(err);
+//             return res.status(422).send({errors: normalizeErrors(err.errors)});
+//           }
+//           await foundUser.message.push({
+//                 senderName:req.body.messageForm.name,
+//                 senderEmail:req.body.messageForm.email,
+//                 message : req.body.messageForm.message,
+//                 senderId : user.id,
+//                 recieverId : req.body.reciever,
+//                 attachmentId : result.public_id,
+//                 attachmentVersion : result.version,
+//           });
+//          foundUser.save();
+//          return  res.json(foundUser);
+//        });
+//     });
+// });
 
 
 // ---------------- Find create-bookmarkUsers  route---------------- 
