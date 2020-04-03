@@ -53,6 +53,7 @@
     
                                 <ul *ngFor="let conv of conversationList">
                                     <li>
+
                                         <a (click)='getChatList(conv.reciever ,conv.recieverName)' >
                                             <div class="message-avatar"><i class="status-icon status-online"></i></div>
                                             <div class="message-by">
@@ -60,9 +61,10 @@
                                                     <h5>{{conv.recieverName}}</h5>
                                                     <p>{{conv.message}}</p>
                                                 </div>
-                                                <p></p>
+                                                <p> <button  (click)='deleteConv(conv._id)' class="message-action"><i class="fas fa-trash"></i></button></p>
                                             </div>
                                         </a>
+                                       
                                     </li>
                                 </ul>
                             </div>
@@ -73,7 +75,6 @@
     
                                 <div class="messages-headline">
                                     <h4></h4>
-                                    <a href="#" class="message-action"><i class="icon-feather-trash-2"></i> Delete Conversation</a>
                                 </div>
                                 <!-- Message Content Inner -->
                                 <div class="message-content-inner" ngx-auto-scroll lock-y-offset="10" observe-attributes>

@@ -275,9 +275,49 @@ router.post("/send-chat-message" ,authMiddleware ,function(req,res){
         }
    
     });
+  });
+    // ---------------- Find delete-userBokkmark route---------------- 
+
+router.post('/remove-isread', authMiddleware , function(req,res){
+  const userId = res.locals.user.id; 
+  const msgId = req.body.msgId;
+  User.findById({_id : userId}).populate('chatList.msg').exec(function(err,foundUser){
+      if (err) {
+          console.log(err);
+          return res.status(422).send({errors: normalizeErrors(err.errors)});
+        }
+      const messageId = foundUser.conversationList;
+      Message.findOne({_id:messageId}, function(err,foundMsge){
+       if(err){
+        return res.status(422).send({errors: normalizeErrors(err.errors)});
+       }
+       const foundMassege =  foundMsge.messages.filter(function(x) { return x.id === msgId; });
+       foundMassege[0].isRead = true;
+       foundMsge.save();
+       return  res.json(foundMsge);
+      });
+      
+   });
+
  });
+ // ---------------- Find delete-conversation route---------------- 
 
-
+ router.post('/remove-conversation', authMiddleware , function(req,res){
+  const userId = res.locals.user.id; 
+  const convId = req.body.convId;
+  const recieverId = req.body.recieverId;
+  console.log('recieverId',recieverId);
+  User.findById({_id : userId}).populate('chatList.msg').exec(function(err,foundUser){
+    if (err) {
+        console.log(err);
+        return res.status(422).send({errors: normalizeErrors(err.errors)});
+    }
+       const chat = foundUser.chatList.filter(function(x) { return x.id !== convId; })
+       foundUser.chatList = chat;
+       foundUser.save();
+       return  res.json(foundUser);
+    });
+ });
 
 
 module.exports = router;

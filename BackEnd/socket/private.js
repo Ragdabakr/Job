@@ -10,5 +10,9 @@ module.exports = function(io){
             // console.log("data22",data);
             io.to(data.reciever).emit('is_typing' , data);
         });
+        socket.on('stop_typing', data => {
+            // console.log("data22",data);
+            io.to(data.reciever).emit('stop_typing_data' , data);
+        });
     });
 };

@@ -83,6 +83,7 @@ const routes: Routes = [
 { path: 'dashboard',
   children: [
     { path: 'message', component: ChatComponent, canActivate: [AuthGuard] },
+    { path: 'message/:username', component: ChatComponent, canActivate: [AuthGuard] },
   ]
 },
 {path: '404', component: PageNotFoundComponent },

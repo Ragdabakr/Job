@@ -1,2 +1,14 @@
 
 #header-container{margin-bottom: 20px;}
+.open>.dropdown-menu {
+    display: block;
+    margin-top: 20px;
+    padding-top: 50px;
+}
+.main{
+    color: rebeccapurple;
+}
+.notification-text, .header-notifications-content .notification-text {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

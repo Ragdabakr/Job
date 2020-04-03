@@ -19,5 +19,13 @@ public getAllMessages(senderId , recieverId): Observable<any> {
 public sendMessage(body: any  , senderId , reciverId , senderName, reciverName ): Observable<any> { 
   return this.http.post('/api/v1/message/send-chat-message' , {body  , senderId , reciverId , senderName , reciverName});
 }
+public removeIsRead( msgId ): Observable<any> {
+  return this.http.post('/api/v1/message/remove-isread' , { msgId});
+}
+public deleteConv( chatListId): Observable<any> {
+  // tslint:disable-next-line: no-debugger
+  debugger; 
+  return this.http.post('/api/v1/message/remove-conversation' , {  chatListId });
+}
 
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { MessageService } from '../message.service';
 import io from 'socket.io-client';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -21,8 +23,13 @@ export class ChatComponent implements OnInit {
   body: any;
   typingMessage;
   typing: boolean = false;
+  findMsgId: any;
+  chatListId: any;
 
   constructor(private auth: AuthService ,
+              private router: Router,
+              private route: ActivatedRoute,
+              private location: Location,
               private messageService: MessageService) {this.socket = io('http://localhost:3000')}
 
   ngOnInit() {
@@ -31,12 +38,19 @@ export class ChatComponent implements OnInit {
       this.getChatList(this.recieverId , this.recieverName);
     });
     this.socket.on('is_typing', data => {
-      console.log(data.sender);
-      console.log(this.recieverName);
       if (data.sender === this.recieverName) {
          this.typing = true;
       }
     });
+    this.socket.on('stop_typing_data', data => {
+      if (data.sender === this.recieverName) {
+         this.typing = false;
+      }
+    });
+
+    // this.socket.on('refreshUrlPage', () => {
+    //   window.location.href = window.location.href + '/' + this.recieverName;
+    // });
 }
 
   getUser() {
@@ -52,9 +66,12 @@ export class ChatComponent implements OnInit {
     this.recieverName = recieverName;
     this.messageService.getAllMessages(this.userId, this.recieverId).subscribe((data) => {
     this.chat = data.messages;
-    
+    // this.socket.emit('refresh', {});
+    this.location.replaceState(`/dashboard/message/${this.recieverName}`);
+    this.deleteConv(this.chatListId);
      });
   }
+
   joinChat() {
     const params = {
       room1: this.senderName ,
@@ -73,5 +90,20 @@ export class ChatComponent implements OnInit {
         sender: this.senderName,
         reciever : this.recieverName
       });
+      if (this.typingMessage) {
+        clearTimeout(this.typingMessage);
+      }
+      this.typingMessage = setTimeout(() => {
+      this.socket.emit('stop_typing', {
+        sender: this.senderName,
+        reciever : this.recieverName
+      });
+    }, 500);
+  }
+  deleteConv( chatListId) {
+    this.chatListId = chatListId;
+    this.messageService.deleteConv( chatListId).subscribe((data) =>{
+    });
+    window.location.reload();
     }
 }

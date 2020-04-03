@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
     this.as.signIn(formData.email , formData.password ).subscribe((data) => {
     console.log(data);
     this.getUserById();
+    window.location.href =  '/';
     },
     (err) => {
       this.errorMessage = 'Email or password is not correct';

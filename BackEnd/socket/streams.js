@@ -6,6 +6,10 @@ module.exports = function(io){
             console.log("data",data);
            io.emit('refreshPage',{}); 
         });
+        socket.on('refreshUrl',function(data){
+            console.log("data",data);
+           io.emit('refreshUrlPage',{}); 
+        });
 
         // socket.on('online',function(data){
         //     console.log("data",data);
