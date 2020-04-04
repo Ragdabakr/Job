@@ -63,8 +63,8 @@ const userSchema = new Schema({
           jobSummary: {type:String},
       }],
       profileimage:{
-        imageVersion:{type:String,default: '1555401575'},
-        imageId:{type:String,default: 'images.png'}
+        imageVersion:{type:String,default: '1585916456'},
+        imageId:{type:String,default: 'user_rygoeq.png'}
       },
       pdf : {
          pdfVersion:{type:String},
@@ -90,10 +90,11 @@ applayforJobs:[{
   reciever: { type: Schema.Types.ObjectId, ref: 'User' },
   recieverName:{type:String},
   message:{type:String},
+  imageVersion:{type:String},
+  imageId:{type:String},
   msg: { type: Schema.Types.ObjectId, ref: 'Message' },
   read :{type:Boolean,default :false},
  }],
-
  conversationList:[{
     type: Schema.Types.ObjectId, ref: 'Message' 
  }],

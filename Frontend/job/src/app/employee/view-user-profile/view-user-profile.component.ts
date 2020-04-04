@@ -82,6 +82,10 @@ export class ViewUserProfileComponent implements OnInit {
   reciverId: any;
   reciverName: any;
   senderName: any;
+  imageVersionReciver: any;
+  imageIdReciver: any;
+  imageVersionSender: any;
+  imageIdSender: any;
   constructor(
     private modalService: NgbModal,
     private employeeService: EmployeeService ,
@@ -98,7 +102,7 @@ export class ViewUserProfileComponent implements OnInit {
   this.getCountries();
   this.messageForm = this.fb.group ({
     message: ['', Validators.required],
-    attachments: ['']
+    // attachments: ['']
   });
 
   this.cvForm = this.fb.group ({
@@ -123,7 +127,9 @@ export class ViewUserProfileComponent implements OnInit {
   getSenderProfile() {
     this.senderId = this.auth.getUserId();
     this.auth.getUserById(this.senderId).subscribe((user) => {
-     this.senderName = user.profile.firstName;
+    this.senderName = user.profile.firstName;
+    this.imageVersionSender = user.profile.profileimage.imageVersion;
+    this.imageIdSender = user.profile.profileimage.imageId;
     });
   }
   getUserProfile() {
@@ -132,6 +138,8 @@ export class ViewUserProfileComponent implements OnInit {
       this.auth.getUserById(this.userId).subscribe((user) => {
       this.userProfile = user;
       this.user = user;
+      this.imageVersionReciver = user.profile.profileimage.imageVersion;
+      this.imageIdReciver = user.profile.profileimage.imageId;
       this.reciverName = this.user.profile.firstName;
       this.jobHistories = user.profile.jobHistories;
       this.bookmarks = user.bookmarkUsers;
@@ -202,25 +210,30 @@ ReadAsBase64(file): Promise <any> {
 messages(messageForm) {
   this.employeeService.createMessage(
     messageForm.value ,
-    this.selectedPdf ,
     this.senderId ,
     this.reciverId ,
     this.senderName ,
-    this.reciverName )
+    this.reciverName,
+    this.imageVersionReciver,
+    this.imageIdReciver,
+    this.imageVersionSender,
+    this.imageIdSender
+
+     )
   .subscribe(messgaeData => {
     window.location.reload();
   });
-  this.pdfUploadProgress = '0%';
-  this.employeeService.sendMessagePdf(this.selectedPdf)
-  .subscribe(events => {
-    if (events.type === HttpEventType.UploadProgress) {
-      this.pdfUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
-      console.log(this.pdfUploadProgress);
-    } else if (events.type === HttpEventType.Response) {
-      this.pdfUploadProgress = '';
-      alert('SUCCESS !!');
-    }
-  });
+  // this.pdfUploadProgress = '0%';
+  // this.employeeService.sendMessagePdf(this.selectedPdf)
+  // .subscribe(events => {
+  //   if (events.type === HttpEventType.UploadProgress) {
+  //     this.pdfUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+  //     console.log(this.pdfUploadProgress);
+  //   } else if (events.type === HttpEventType.Response) {
+  //     this.pdfUploadProgress = '';
+  //     alert('SUCCESS !!');
+  //   }
+  // });
 }
 
 OnPdfSelect(event) {

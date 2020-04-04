@@ -19,6 +19,10 @@ router.post("/send-message" ,authMiddleware ,function(req,res){
     const message = req.body.messageForm.message;
     const reciverName = req.body.reciverName;
     const senderName = req.body.senderName;
+    const imageVersionR = req.body.imageVersion;
+    const imageIdR = req.body.imageId;
+    const imageVersionS = req.body.imageVersionSender;
+    const imageIdS = req.body.imageIdSender;
  
     //check if there is previous conversation or not 
 
@@ -87,6 +91,8 @@ router.post("/send-message" ,authMiddleware ,function(req,res){
                 reciever:senderId,
                 recieverName:senderName ,
                 message:message,
+                imageVersion:imageVersionS ,
+                imageId:imageIdS,
                 msg:newMessage._id
               });
           await  foundUser.conversationList.push(newMessage.id);    
@@ -102,7 +108,9 @@ router.post("/send-message" ,authMiddleware ,function(req,res){
                reciever:recieverId,
                recieverName:reciverName ,
                message:message,
-               msg:newMessage._id
+               msg:newMessage._id,
+               imageVersion:imageVersionR ,
+               imageId:imageIdR,
               });
            await  foundUser.conversationList.push(newMessage.id);
             foundUser.save();

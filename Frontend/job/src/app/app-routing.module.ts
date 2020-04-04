@@ -56,6 +56,7 @@ const routes: Routes = [
     children: [
       // { path: '', redirectTo: 'profile', pathMatch: 'full' },
       { path: 'create-profile', component: CreateCvComponent, canActivate: [AuthGuard] },
+      { path: 'profile', component: ViewProfileComponent, canActivate: [AuthGuard] },
       { path: 'profile/:id', component: ViewProfileComponent, canActivate: [AuthGuard] },
       { path: 'applay-jobs', component: AppliedJobsComponent, canActivate: [AuthGuard] },
       // { path: 'bookmarks', component: AppliedJobsComponent, canActivate: [AuthGuard] }

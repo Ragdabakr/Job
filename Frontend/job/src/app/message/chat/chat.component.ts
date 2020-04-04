@@ -25,6 +25,8 @@ export class ChatComponent implements OnInit {
   typing: boolean = false;
   findMsgId: any;
   chatListId: any;
+  user: any;
+  recieverUser: any;
 
   constructor(private auth: AuthService ,
               private router: Router,
@@ -47,28 +49,28 @@ export class ChatComponent implements OnInit {
          this.typing = false;
       }
     });
-
-    // this.socket.on('refreshUrlPage', () => {
-    //   window.location.href = window.location.href + '/' + this.recieverName;
-    // });
 }
 
   getUser() {
     this.userId = this.auth.getUserId();
     this.auth.getUserById(this.userId).subscribe((data) => {
+    this.user = data;
     this.conversationList  = data.chatList;
     this.senderName = data.profile.firstName;
     });
   }
   getChatList(recieverId , recieverName) {
     this.joinChat();
+    this.auth.getUserById(recieverId).subscribe((data) => {
+      this.recieverUser = data.profile;
+      console.log('dcdc', this.recieverUser);
+      });
     this.recieverId = recieverId;
     this.recieverName = recieverName;
     this.messageService.getAllMessages(this.userId, this.recieverId).subscribe((data) => {
     this.chat = data.messages;
     // this.socket.emit('refresh', {});
     this.location.replaceState(`/dashboard/message/${this.recieverName}`);
-    this.deleteConv(this.chatListId);
      });
   }
 

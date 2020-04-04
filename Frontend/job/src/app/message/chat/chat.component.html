@@ -53,18 +53,16 @@
     
                                 <ul *ngFor="let conv of conversationList">
                                     <li>
-
+                                        <!-- <p> <button  (click)='deleteConv(conv._id)' class="message-action"><i class="fas fa-trash"></i></button></p> -->
                                         <a (click)='getChatList(conv.reciever ,conv.recieverName)' >
-                                            <div class="message-avatar"><i class="status-icon status-online"></i></div>
+                                            <div class="message-avatar"><img src="https://res.cloudinary.com/dnf8ntdmr/image/upload/v{{conv.imageVersion}}/{{conv.imageId}}" /><i class="status-icon status-online"></i></div>
                                             <div class="message-by">
                                                 <div class="message-by-headline">
                                                     <h5>{{conv.recieverName}}</h5>
                                                     <p>{{conv.message}}</p>
                                                 </div>
-                                                <p> <button  (click)='deleteConv(conv._id)' class="message-action"><i class="fas fa-trash"></i></button></p>
                                             </div>
                                         </a>
-                                       
                                     </li>
                                 </ul>
                             </div>
@@ -82,14 +80,19 @@
                                         <li>
                                             <div *ngIf='c.senderId === userId' class="message-bubble me">
                                                 <div class="message-bubble-inner">
-                                                    <div class="message-avatar "><img src="images/user-avatar-small-01.jpg" alt="" />{{c.sender}}</div>
+                                                    <div class="message-avatar">
+                                                        <img src="https://res.cloudinary.com/dnf8ntdmr/image/upload/v{{user.profile.profileimage.imageVersion}}/{{user.profile.profileimage.imageId}}.png" />
+                                                        <!-- {{c.sender}} -->
+                                                    </div>
                                                     <div class="message-text"><p>{{c.body}}</p></div>
                                                 </div>
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div *ngIf='c.senderId !== userId' class="message-bubble">
                                                 <div class="message-bubble-inner">
-                                                    <div class="message-avatar avatar"><img src="images/user-avatar-small-01.jpg" alt="" />{{c.sender}}</div>
+                                                    <div class="message-avatar avatar"><img src="https://res.cloudinary.com/dnf8ntdmr/image/upload/v{{recieverUser.profileimage.imageVersion}}/{{recieverUser.profileimage.imageId}}" alt="" />
+                                                        <!-- {{c.sender}} -->
+                                                    </div>
                                                     <div class="message-text"><p>{{c.body}}</p></div>
                                                 </div>
                                                 <div class="clearfix"></div>

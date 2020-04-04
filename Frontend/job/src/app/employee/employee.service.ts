@@ -77,10 +77,21 @@ public deleteJob(userId , idJobHistory): Observable<any> {
 public deleteApplayJob(jobId): Observable<any> {
  return this.http.post('/api/v1/employee/delete-applay-job' , {jobId});
 }
-public createMessage(messageForm: any , pdf: any ,senderId , reciverId , senderName, reciverName ): Observable<any> {
+public createMessage(messageForm: any ,senderId , reciverId , senderName, reciverName , imageVersion , imageId , imageVersionSender , imageIdSender ): Observable<any> {
   // tslint:disable-next-line: no-debugger
   debugger;
-  return this.http.post('/api/v1/message/send-message' , {messageForm , pdf , senderId , reciverId , senderName , reciverName});
+  return this.http.post('/api/v1/message/send-message' ,
+  {
+  messageForm ,
+  senderId ,
+  reciverId ,
+  senderName ,
+  reciverName ,
+  imageVersion ,
+  imageId,
+  imageVersionSender,
+  imageIdSender
+        });
  }
 
 
