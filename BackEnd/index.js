@@ -60,6 +60,9 @@ app.use('/api/v1/employee', require('./routes/employee'));
 app.use('/api/v1/employer', require('./routes/employer'));
 app.use('/api/v1/jobs', require('./routes/jobs'));
 app.use('/api/v1/message', require('./routes/message'));
+app.use('/api/v1/payment', require('./routes/payment'));
+app.use('/api/v1/admin', require('./routes/admin'));
+app.use('/api/v1/home', require('./routes/home'));
 
 const PORT = process.env.PORT || 3000;
 http.listen(PORT,function(){

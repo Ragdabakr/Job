@@ -53,7 +53,6 @@
     
                                 <ul *ngFor="let conv of conversationList">
                                     <li>
-                                        <!-- <p> <button  (click)='deleteConv(conv._id)' class="message-action"><i class="fas fa-trash"></i></button></p> -->
                                         <a (click)='getChatList(conv.reciever ,conv.recieverName)' >
                                             <div class="message-avatar"><img src="https://res.cloudinary.com/dnf8ntdmr/image/upload/v{{conv.imageVersion}}/{{conv.imageId}}" /><i class="status-icon status-online"></i></div>
                                             <div class="message-by">
@@ -63,6 +62,7 @@
                                                 </div>
                                             </div>
                                         </a>
+                                        <p> <button  (click)='deleteConv(conv._id)' class="message-action"><i class="fas fa-trash"></i></button></p>
                                     </li>
                                 </ul>
                             </div>

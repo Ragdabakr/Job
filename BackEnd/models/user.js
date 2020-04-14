@@ -73,7 +73,6 @@ const userSchema = new Schema({
 
 
 },
-
 bookmarkUsers :[{
  type: Schema.Types.ObjectId, ref: 'User' 
 }],
@@ -98,7 +97,15 @@ applayforJobs:[{
  conversationList:[{
     type: Schema.Types.ObjectId, ref: 'Message' 
  }],
-
+ plan:[{
+  type: Schema.Types.ObjectId, ref: 'Plan' 
+}],
+ isCompanyPlan:{
+  type: Boolean
+},
+isEmployeePlan:{
+  type:Boolean
+}
 
 });
 
@@ -111,6 +118,7 @@ userSchema.methods.hasSamePassword = function(requestedPassword) {
 
 //hashing password after saving user in db
 //------------------------------------------
+
 
 userSchema.pre('save',function(next){
 

@@ -1,0 +1,224 @@
+
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <div class="clearfix"></div>
+    <!-- Header Container / End -->
+    
+    
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+    
+        <!-- Dashboard Content
+        ================================================== -->
+        <div class="dashboard-content-container" data-simplebar>
+            <div class="dashboard-content-inner" >
+                <div *ngIf="error" class="alert alert-danger alert-dismissible fade in" >
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p >{{alert}}</p>
+                </div>
+                <div *ngIf="success" class="alert alert-success alert-dismissible fade in" >
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p>{{successAlert}}</p>
+                </div>
+                <!-- Dashboard Headline -->
+                <div class="dashboard-headline">
+                    <h3>Post a plan</h3>
+                    <!-- Breadcrumbs -->
+                    <nav id="breadcrumbs" class="dark">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Dashboard</a></li>
+                            <li>Post a Job</li>
+                        </ul>
+                    </nav>
+                </div>
+        
+                <!-- Row -->
+                <div class="row">
+    
+                    <!-- Dashboard Box -->
+                    <div class="col-xl-12">
+                        <div class="dashboard-box margin-top-0">
+                            <!-- Headline -->
+                            <div class="headline">
+                                <h3><i class="fa fa-briefcase"></i> Plan Form</h3>
+                                
+                            </div>
+                            <form [formGroup]="postForm" novalidate >
+                                {{postForm.value | json}}
+                                <div class="content with-padding padding-bottom-10">
+                                    <div class="row">
+    
+                                        <div class="col-md-12">
+                                            <div class="submit-field">
+                                                    <div class="submit-field form-group" 
+                                                     [ngClass]="{'has-error':  (postForm?.submitted && postForm.controls?.title.invalid) || postForm.get('title').errors &&
+                                                                 (postForm.get('title').touched || postForm.get('title').dirty)}">
+                                                        <h5 class="control-label" >Plan Title<span class="required">*</span></h5>         
+                                                        <input  type="text" class="form-control   with-border" minlength="2"  maxlength="100" formControlName='title' required>
+                                                        <span class="help-block" *ngIf="postForm.get('title').errors &&
+                                                        (postForm.get('title').touched || postForm.get('title').dirty)">
+                                                        <span class="help-block" *ngIf="(postForm?.submitted && postForm.controls?.title.invalid) ||  postForm.get('title').errors.required">title is  Required</span>
+                                                        <span class="help-block" *ngIf="postForm.get('title').errors.minlength || postForm.get('title').errors.maxlength">Min length is 2 & max length is 10</span>
+                                                        </span>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="submit-field">
+                                                    <div class="submit-field form-group" 
+                                                     [ngClass]="{'has-error':  (postForm?.submitted && postForm.controls?.paypalPlanId.invalid) || postForm.get('paypalPlanId').errors &&
+                                                                 (postForm.get('paypalPlanId').touched || postForm.get('paypalPlanId').dirty)}">
+                                                        <h5 class="control-label" >Paypal Plan Id<span class="required">*</span></h5>         
+                                                        <input  type="text" class="form-control   with-border" minlength="2"  maxlength="100" formControlName='paypalPlanId' required>
+                                                        <span class="help-block" *ngIf="postForm.get('paypalPlanId').errors &&
+                                                        (postForm.get('paypalPlanId').touched || postForm.get('paypalPlanId').dirty)">
+                                                        <span class="help-block" *ngIf="(postForm?.submitted && postForm.controls?.paypalPlanId.invalid) ||  postForm.get('paypalPlanId').errors.required">Plan Id is  Required</span>
+                                                        </span>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="submit-field">
+                                                    <div class="submit-field form-group" 
+                                                     [ngClass]="{'has-error':  (postForm?.submitted && postForm.controls?.price.invalid) || postForm.get('price').errors &&
+                                                                 (postForm.get('price').touched || postForm.get('price').dirty)}">
+                                                        <h5 class="control-label" >Price<span class="required">*</span></h5>         
+                                                        <input  type="text" class="form-control   with-border" minlength="2"  maxlength="100" formControlName='price' required>
+                                                        <span class="help-block" *ngIf="postForm.get('price').errors &&
+                                                        (postForm.get('price').touched || postForm.get('price').dirty)">
+                                                        <span class="help-block" *ngIf="(postForm?.submitted && postForm.controls?.price.invalid) ||  postForm.get('price').errors.required">price is  Required</span>
+                                                        </span>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        
+    
+                                        <div class="col-md-6">
+                                            <div class="submit-field">
+                                                <div class="input-with-icon">
+                                                    <div id="autocomplete-container">
+                                                        <div class="submit-field form-group" 
+                                                     [ngClass]="{'has-error': postForm.get('period').errors &&
+                                                                 (postForm.get('period').touched || postForm.get('period').dirty)}">
+                                                        <h5 class="control-label" >peroid <span class="required">*</span></h5>
+                                                        <input  type="text" minlength="2" maxlength="100" class="form-control  with-border" formControlName='period' required>
+                                                        <span class="help-block"  *ngIf="postForm.get('period').errors &&
+                                                        (postForm.get('period').touched || postForm.get('period').dirty)">
+                                                        <span  *ngIf="postForm.get('period').errors.required">period is  Required</span>
+                                                        <span  *ngIf="postForm.get('period').errors.minlength || postForm.get('period').errors.maxlength">Min length is 8 & max length is 10</span>
+                                                        </span>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-12">
+                                            <div class="submit-field">
+                                                <h5>plan items</h5>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                            <div class="content content-skill">
+                                                                  <div class="row">
+                                                                           <div class="col-md-12" [formGroup]="postForm"  >
+                                                                                  <div class="submit-field" formArrayName ="PlanItems"  >
+                                                                                      <div class="input-with-icon-left" >
+                                                                                          <input type="submit"  (click)="addPlanItemButtonClick()" class="button  ripple-effect margin-top-10" value="Add New Plan Item">
+                                                                                      </div>
+                                                                                      <div class="keywords-container" *ngFor="let item of postForm.get('PlanItems').controls; let i = index;" >
+                                                                                      <div class="keyword-input-container"   [formGroupName] ='i'>
+                                                                                        <br/>
+                                                                                        <div class="form-group  col-md-6">
+                                                                                            <label class="control-label"  for="JobTitle">Plan Item</label>
+                                                                                            <input type="text" formControlName="item" class="keyword-input with-border" placeholder="" />
+                                                                                        </div>
+                                                                        
+                                                                                      </div>
+                                                                                      </div>
+                                                                                     
+                                                                                      <div class="clearfix"></div>
+                                                                                  </div>
+                                                                               </div>   
+                                                                       </div>
+                                                                       <ul *ngFor="let myItem of PlanItems">
+                                                                        <li class="keyword"><span class="keyword-remove"></span><span >{{myItem.item}}</span></li>
+                                                                      </ul>
+                                                                  </div>
+                                                           </div>
+                                                   </div>
+                                            </div>
+                                        </div>          
+                                         <div class="col-md-12">
+                                            <div class="submit-field">
+                                                 <div class="submit-field  form-group" [ngClass]="{'has-error': postForm.get('description').errors &&
+                                                (postForm.get('description').touched || postForm.get('description').dirty)}">
+                                                <h5 class="control-label">Description requirments <span class="required">*</span> </h5>
+                                                    <textarea cols="50" rows="5" formControlName='description' minlength="10" maxlength="1000" class="form-control with-border" required></textarea>
+                                                    <span class="help-block" *ngIf="postForm.get('description').errors &&
+                                                        (postForm.get('description').touched || postForm.get('description').dirty)">
+                                                        <span class="help-block" *ngIf="postForm.get('description').errors.required">Job description is required</span>
+                                                        <span class="help-block" *ngIf="postForm.get('description').errors.minlength || postForm.get('description').errors.maxlength">min length is 10 and max length is 1000</span>
+                                                    </span>
+                                                </div> 
+                                            </div>
+                                        </div> 
+                                        <div class="col-xl-12">
+                                          <input type="submit"  (click)="postPlan(postForm)"  class="button ripple-effect padding big margin-top-30" value="Post a Plan">
+                                          <input type="submit"  (click)="reset()"  class="button ripple-effect big margin-top-30" value="Reset">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row / End -->
+    
+                <!-- Footer -->
+                <div class="dashboard-footer-spacer"></div>
+                <div class="small-footer margin-top-15">
+                    <div class="small-footer-copyrights">
+                        © 2018 <strong>Hireo</strong>. All Rights Reserved.
+                    </div>
+                    <ul class="footer-social-links">
+                        <li>
+                            <a href="#" title="Facebook" data-tippy-placement="top">
+                                <i class="icon-brand-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="Twitter" data-tippy-placement="top">
+                                <i class="icon-brand-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="Google Plus" data-tippy-placement="top">
+                                <i class="icon-brand-google-plus-g"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="LinkedIn" data-tippy-placement="top">
+                                <i class="icon-brand-linkedin-in"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- Footer / End -->
+    
+            </div>
+        </div>
+        <!-- Dashboard Content / End -->
+    
+    </div>
+    <!-- Dashboard Container / End -->
+    
+    </div>
+    <!-- Wrapper / End -->
+    
+    
+    

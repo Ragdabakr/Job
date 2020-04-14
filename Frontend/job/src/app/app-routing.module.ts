@@ -6,16 +6,6 @@ import { AuthModule } from './auth/auth.module';
 import { VerifyComponent } from './auth/verify/verify.component';
 import { EmployeeModule } from './employee/employee.module';
 import { CreateCvComponent } from './employee/create-cv/create-cv.component';
-// import { HomeComponent } from './home/home.component';
-
-
-
-// Import canActivate guard services
-// import { SecureInnerPagesGuard } from './auth/guard/secure-inner-pages';
-// import { AuthGuard } from './auth/guard/auth.guard';
-// import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
-// import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
-// import { ProfileComponent } from './employee/profile/profile.component';
 import { ViewProfileComponent } from './employee/view-profile/view-profile.component';
 import { PostJobComponent } from './employer/post-job/post-job.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -36,11 +26,20 @@ import { ManageProfileComponent } from './employer/manage-profile/manage-profile
 import { EditProfileComponent } from './employer/edit-profile/edit-profile.component';
 import { ManageBookmarksComponent } from './employer/manage-bookmarks/manage-bookmarks.component';
 import { ChatComponent } from './message/chat/chat.component';
+import { HomebageComponent } from './homebage/homebage.component';
+import { CheckoutComponent } from './homebage/checkout/checkout.component';
+import { PricingPlansComponent } from './homebage/pricing-plans/pricing-plans.component';
+import { PlansComponent } from './admin/plans/plans.component';
+import { OrderComponent } from './homebage/order/order.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent },
   {path: 'register', component: RegisterComponent },
   {path: 'verfiy', component: VerifyComponent },
+  { path: '', component: HomebageComponent},
+  { path: 'checkout/:planId', component: CheckoutComponent, canActivate: [AuthGuard] },
+  { path: 'plans', component: PricingPlansComponent , canActivate: [AuthGuard]  },
+  { path: 'order', component: OrderComponent , canActivate: [AuthGuard]  },
   { path: 'employee',
     children: [
       { path: 'list', component: EmployeeListComponent},
@@ -85,6 +84,11 @@ const routes: Routes = [
   children: [
     { path: 'message', component: ChatComponent, canActivate: [AuthGuard] },
     { path: 'message/:username', component: ChatComponent, canActivate: [AuthGuard] },
+  ]
+},
+{ path: 'admin',
+  children: [
+    { path: 'plans', component: PlansComponent, canActivate: [AuthGuard] },
   ]
 },
 {path: '404', component: PageNotFoundComponent },

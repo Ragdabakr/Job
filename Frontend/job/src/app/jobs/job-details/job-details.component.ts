@@ -73,8 +73,8 @@ export class JobDetailsComponent implements OnInit {
       this.FindSimilarJobs(this.job.title , this.jobId);
       this.jobApplicants = data.jobApplicants;
       const Id = this.jobApplicants.filter(x => x.user.id);
-      console.log('idss', Id);
-      console.log('idss', this.jobApplicants);
+      // console.log('idss', Id);
+      // console.log('idss', this.jobApplicants);
       if (this.userId in Id) {
         this.canApplay = false;
       }
@@ -89,8 +89,8 @@ export class JobDetailsComponent implements OnInit {
     if (this.userId) {
     this.auth.getUserById(this.userId).subscribe((user) => {
     this.user = user;
-    console.log('userrrr', user.profile.pdf.pdfId);
-    console.log('sds', user.profile.pdf.pdfVersion);
+    // console.log('userrrr', user.profile.pdf.pdfId);
+    // console.log('sds', user.profile.pdf.pdfVersion);
      });
     } else {
      this.user = '';

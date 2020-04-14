@@ -1,0 +1,244 @@
+
+<!-- Wrapper -->
+<div id="wrapper">
+<div class="clearfix"></div>
+<!-- Header Container / End -->
+
+<!-- Titlebar
+================================================== -->
+<div id="titlebar" class="gradient">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+				<h2>Pricing Plans</h2>
+
+				<!-- Breadcrumbs -->
+				<nav id="breadcrumbs" class="dark">
+					<ul>
+						<li><a href="#">Home</a></li>
+						<li><a href="#">Pages</a></li>
+						<li>Pricing Plans</li>
+					</ul>
+				</nav>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Page Content
+================================================== -->
+<div class="container">
+	<div class="row">
+
+		<div class="col-xl-12">
+
+			<!-- Billing Cycle  -->
+			<div class="billing-cycle-radios margin-bottom-70">
+				<div class="radio billed-monthly-radio">
+					<input id="radio-5" name="radio-payment-type" type="radio" checked>
+					<label for="radio-5"><span class="radio-label"></span> Billed Monthly</label>
+				</div>
+
+				<div class="radio billed-yearly-radio">
+					<input id="radio-6" name="radio-payment-type" type="radio">
+					<label for="radio-6"><span class="radio-label"></span> Billed Yearly <span class="small-label">Save 10%</span></label>
+				</div>
+			</div>
+
+			<!-- Pricing Plans Container -->
+			<div *ngFor='let plan of plans'>
+
+				<!-- Plan -->
+				<div class="pricing-plan   col-xl-4">
+					<h3 class='planTitle'>{{plan.title}}</h3>
+					<p class="margin-top-10">{{plan.description}}</p>
+					<div class="pricing-plan-label billed-monthly-label"><strong>${{plan.price}}</strong>/ {{plan.period}}</div>
+					<div class="pricing-plan-label billed-yearly-label"><strong>$205</strong>/ yearly</div>
+					<div class="pricing-plan-features">
+						<strong>Features of {{plan.title}}</strong>
+						<ul *ngFor='let item of PlanItems'>
+							<li>{{item.item}}</li>
+						</ul>
+						{{plan.period}}
+					</div>				
+					<!-- <img (click)='getCompanyPlan()'  src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypalcheckout-34px.png" alt="PayPal Checkout" />
+                    <div [paypalSubscription]="'P-67473295FH088784FL2FUKVY'" [id]="companyPlanId"></div> -->
+					<a (click)='getCompanyCheckout(plan)' class="button full-width margin-top-20">Buy Now</a>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+
+<div class="margin-top-80"></div>
+
+<!-- Footer
+================================================== -->
+<div id="footer">
+	
+	<!-- Footer Top Section -->
+	<div class="footer-top-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+
+					<!-- Footer Rows Container -->
+					<div class="footer-rows-container">
+						
+						<!-- Left Side -->
+						<div class="footer-rows-left">
+							<div class="footer-row">
+								<div class="footer-row-inner footer-logo">
+									<img src="images/logo2.png" alt="">
+								</div>
+							</div>
+						</div>
+						
+						<!-- Right Side -->
+						<div class="footer-rows-right">
+
+							<!-- Social Icons -->
+							<div class="footer-row">
+								<div class="footer-row-inner">
+									<ul class="footer-social-links">
+										<li>
+											<a href="#" title="Facebook" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-facebook-f"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="Twitter" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-twitter"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="Google Plus" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-google-plus-g"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="LinkedIn" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-linkedin-in"></i>
+											</a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							
+							<!-- Language Switcher -->
+							<div class="footer-row">
+								<div class="footer-row-inner">
+									<select class="selectpicker language-switcher" data-selected-text-format="count" data-size="5">
+										<option selected>English</option>
+										<option>Français</option>
+										<option>Español</option>
+										<option>Deutsch</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- Footer Rows Container / End -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Top Section / End -->
+
+	<!-- Footer Middle Section -->
+	<div class="footer-middle-section">
+		<div class="container">
+			<div class="row">
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>For Candidates</h3>
+						<ul>
+							<li><a href="#"><span>Browse Jobs</span></a></li>
+							<li><a href="#"><span>Add Resume</span></a></li>
+							<li><a href="#"><span>Job Alerts</span></a></li>
+							<li><a href="#"><span>My Bookmarks</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>For Employers</h3>
+						<ul>
+							<li><a href="#"><span>Browse Candidates</span></a></li>
+							<li><a href="#"><span>Post a Job</span></a></li>
+							<li><a href="#"><span>Post a Task</span></a></li>
+							<li><a href="#"><span>Plans & Pricing</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>Helpful Links</h3>
+						<ul>
+							<li><a href="#"><span>Contact</span></a></li>
+							<li><a href="#"><span>Privacy Policy</span></a></li>
+							<li><a href="#"><span>Terms of Use</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>Account</h3>
+						<ul>
+							<li><a href="#"><span>Log In</span></a></li>
+							<li><a href="#"><span>My Account</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Newsletter -->
+				<div class="col-xl-4 col-lg-4 col-md-12">
+					<h3><i class="icon-feather-mail"></i> Sign Up For a Newsletter</h3>
+					<p>Weekly breaking news, analysis and cutting edge advices on job searching.</p>
+					<form action="#" method="get" class="newsletter">
+						<input type="text" name="fname" placeholder="Enter your email address">
+						<button type="submit"><i class="icon-feather-arrow-right"></i></button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Middle Section / End -->
+	
+	<!-- Footer Copyrights -->
+	<div class="footer-bottom-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+                    <div id="paypal-button-container">buy</div>
+					© 2018 <strong>Hireo</strong>. All Rights Reserved.
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Copyrights / End -->
+
+</div>
+<!-- Footer / End -->
+
+</div>
+<!-- Wrapper / End -->
+
+<script src="https://www.paypal.com/sdk/js?client-id=Ac2_nMAS1IvWkp9Hp-hO4v8t76k2NYg0CGWZyR8-BEFxU96s2h0TTHf3N7gQyj_hwXa46wTqtqeTal3b&vault=true" data-sdk-integration-source="button-factory"></script>

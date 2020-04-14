@@ -63,7 +63,6 @@ export class ChatComponent implements OnInit {
     this.joinChat();
     this.auth.getUserById(recieverId).subscribe((data) => {
       this.recieverUser = data.profile;
-      console.log('dcdc', this.recieverUser);
       });
     this.recieverId = recieverId;
     this.recieverName = recieverName;
@@ -104,7 +103,7 @@ export class ChatComponent implements OnInit {
   }
   deleteConv( chatListId) {
     this.chatListId = chatListId;
-    this.messageService.deleteConv( chatListId).subscribe((data) =>{
+    this.messageService.deleteConv(this.chatListId).subscribe((data) =>{
     });
     window.location.reload();
     }

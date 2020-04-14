@@ -20,6 +20,9 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from './common/common.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MessageModule } from './message/message.module';
+import { HomebageModule } from './homebage/homebage.module';
+import { AdminModule } from './admin/admin.module';
+
 
 @NgModule({
   declarations: [
@@ -34,11 +37,13 @@ import { MessageModule } from './message/message.module';
     AppRoutingModule,
     AuthModule,
     MessageModule,
+    AdminModule,
     JobsModule,
     EmployeeModule,
     EmployerModule,
     CommonModule,
     BrowserModule,
+    HomebageModule,
     FormsModule,
     ReactiveFormsModule,
     FileUploadModule,

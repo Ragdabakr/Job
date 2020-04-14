@@ -309,18 +309,16 @@ router.post('/remove-isread', authMiddleware , function(req,res){
 
  });
  // ---------------- Find delete-conversation route---------------- 
-
+ 
  router.post('/remove-conversation', authMiddleware , function(req,res){
   const userId = res.locals.user.id; 
-  const convId = req.body.convId;
-  const recieverId = req.body.recieverId;
-  console.log('recieverId',recieverId);
+  const chatListId = req.body.chatListId;
   User.findById({_id : userId}).populate('chatList.msg').exec(function(err,foundUser){
     if (err) {
         console.log(err);
         return res.status(422).send({errors: normalizeErrors(err.errors)});
     }
-       const chat = foundUser.chatList.filter(function(x) { return x.id !== convId; })
+       const chat = foundUser.chatList.filter(function(x) { return x.id !== chatListId; })
        foundUser.chatList = chat;
        foundUser.save();
        return  res.json(foundUser);

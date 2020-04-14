@@ -24,7 +24,17 @@ import { EditJobComponent } from './edit-job/edit-job.component';
 
 
 @NgModule({
-  declarations: [PostJobComponent, CreateProfileComponent, ViewProfilerComponent, EmployerListComponent, ManageCandidateComponent, ManageJobsComponent, EditProfileComponent, ManageProfileComponent, ManageBookmarksComponent, ManageMessagesComponent, EditJobComponent],
+  declarations: [PostJobComponent, 
+    CreateProfileComponent,
+    ViewProfilerComponent,
+    EmployerListComponent,
+    ManageCandidateComponent,
+    ManageJobsComponent,
+    EditProfileComponent,
+    ManageProfileComponent,
+    ManageBookmarksComponent,
+    ManageMessagesComponent,
+    EditJobComponent],
   imports: [
     CommonModule,
     BrowserModule,
